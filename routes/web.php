@@ -8,9 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('attendee.dashboard');
+})->middleware(['auth'])->name('attendee.dashboard');
+
 
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
