@@ -117,7 +117,10 @@
                 </div>
                 <div class="flex flex-col justify-between dark:text-white p-2 h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
                     <h2 class="text-xl">Event Workshops:</h2>
-                    <p class="text-2xl font-bold text-green-400">3</p>
+                    <div class="flex justify-between items-end">
+                        <p class="text-2xl font-bold text-green-400">3</p>
+                        <button type="button" class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Add Workshop</button>
+                    </div>
                 </div>
                 <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
                     <p class="text-2xl text-gray-400 dark:text-gray-500">
