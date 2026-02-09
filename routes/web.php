@@ -33,6 +33,9 @@ Route::prefix('admin')->group(function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+    // The new users management page
+    Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
 });
 
 require __DIR__ . '/auth.php';

@@ -18,8 +18,10 @@ return new class extends Migration
             $table->foreignId('workshop_id')->constrained('workshop')->onDelete('cascade')->nullable();
             $table->string('qr_code_value')->unique()->nullable();
             $table->string('status')->default('registered');
-            $table->timestamp('registered_date');
-            $table->timestamp('updated_at');
+
+            // Use useCurrent() to prevent the "Invalid default value" error it fucks the db up dawg
+            $table->timestamp('registered_date')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

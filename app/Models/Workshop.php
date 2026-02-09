@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Workshop extends Model
 {
-    //
+    
+    // Force the singular table name
+    protected $table = 'workshop';
+
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
