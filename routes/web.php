@@ -34,6 +34,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
+    // The new users management page
+    Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
     Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
     Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
     Route::put('/updateEvent/{id}', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
