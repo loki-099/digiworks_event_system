@@ -22,21 +22,47 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-        $request->session()->regenerate();
+public function store(LoginRequest $request): RedirectResponse
+{
+    $request->authenticate();
+    $request->session()->regenerate();
 
-        if (!in_array(auth()->user()->role, ['admin', 'facilitator'])) {
+    $user = auth()->user();
+
+    // 🔐 Admin login page
+    if ($request->is('admin/login')) {
+        if (!in_array($user->role, ['admin', 'facilitator'])) {
             auth()->logout();
 
             return back()->withErrors([
-                'email' => 'You are not authorized to access the admin panel.',
+                'email' => 'Only admins and facilitators can log in here.',
             ]);
         }
 
-        return redirect()->intended('/admin/dashboard');
+        return redirect()->route('admin.dashboard');
     }
+
+    // 🔐 Attendee login page (/login)
+    if ($request->is('login')) {
+        if ($user->role !== 'user') {
+            auth()->logout();
+
+            return back()->withErrors([
+                'email' => 'Only attendees can log in here.',
+            ]);
+        }
+
+        return redirect()->route('attendee.dashboard');
+    }
+
+    // Safety fallback
+    auth()->logout();
+
+    return back()->withErrors([
+        'email' => 'Unauthorized login attempt.',
+    ]);
+}
+
 
     /**
      * Destroy an authenticated session.
