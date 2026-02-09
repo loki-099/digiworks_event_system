@@ -7,20 +7,25 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Registration;
-class AdminDashboardController extends Controller
-{
-    public function index()
-    {   // logic so the admin gets filtered out when going to users tab in admin page
-        $users = User::where('role','!=', 'admin') ->get();
-        $attendeesCount = User::where('role', 'user')->count();
-        return view('admin.dashboard', compact('attendeesCount'));
 use App\Models\Workshop;
 use PhpParser\Node\Expr\FuncCall;
+// class AdminDashboardController extends Controller
+// {
+//     public function index()
+//     {   // logic so the admin gets filtered out when going to users tab in admin page
+//         $users = User::where('role','!=', 'admin') ->get();
+//         $attendeesCount = User::where('role', 'user')->count();
+//         return view('admin.dashboard', compact('attendeesCount'));
+    
+//     }
+// }
+
 
 class AdminDashboardController extends Controller
 {
     public function index()
     {
+        $users = User::where('role','!=', 'admin') ->get();
         $event = Event::all()->first();
         $workshops = Workshop::all();
         return view('admin.dashboard', compact('event', 'workshops'));
