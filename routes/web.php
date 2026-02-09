@@ -35,7 +35,10 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
-    Route::put('/updateEvent', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
+    Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
+    Route::put('/updateEvent/{id}', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
+    Route::put('/updateWorkshop/{id}', [AdminDashboardController::class, 'updateWorkshop'])->name('updateWorkshop');
+    Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');
 });
 
 require __DIR__ . '/auth.php';

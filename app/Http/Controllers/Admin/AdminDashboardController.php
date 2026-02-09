@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Workshop;
 use PhpParser\Node\Expr\FuncCall;
 
 class AdminDashboardController extends Controller
@@ -13,7 +14,8 @@ class AdminDashboardController extends Controller
     public function index()
     {
         $event = Event::all()->first();
-        return view('admin.dashboard', compact('event'));
+        $workshops = Workshop::all();
+        return view('admin.dashboard', compact('event', 'workshops'));
     }
 
     public function addEvent(Request $request) {
@@ -36,7 +38,7 @@ class AdminDashboardController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Event added successfully.');
     }
 
-    public function updateEvent(Request $request) {
+    public function updateEvent(Request $request, $id) {
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -45,7 +47,7 @@ class AdminDashboardController extends Controller
             'venue' => 'required|string|max:255',
         ]);
 
-        $event = Event::all()->first();
+        $event = Event::find($id);
         if ($event) {
             $event->update([
                 'name' => $request->input('name'),
@@ -57,6 +59,67 @@ class AdminDashboardController extends Controller
         }
 
         return redirect()->route('admin.dashboard')->with('success', 'Event updated successfully.');
+    }
+
+    public function addWorkshop(Request $request, $eventId) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'capacity' => 'required|integer|min:1',
+            'speaker' => 'required|string|max:255',
+            'venue' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+        ]);
+
+        Workshop::create([
+            'event_id' => $eventId,
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'capacity' => $request->input('capacity'),
+            'speaker' => $request->input('speaker'),
+            'venue' => $request->input('venue'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Workshop added successfully.');
+    }
+
+    public function updateWorkshop(Request $request, $id) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'capacity' => 'required|integer|min:1',
+            'speaker' => 'required|string|max:255',
+            'venue' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+        ]);
+
+        $workshop = Workshop::find($id);
+        if ($workshop) {
+            $workshop->update([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'capacity' => $request->input('capacity'),
+                'speaker' => $request->input('speaker'),
+                'venue' => $request->input('venue'),
+                'start_date' => $request->input('start_date'),
+                'end_date' => $request->input('end_date'),
+            ]);
+        }
+
+        return redirect()->route('admin.dashboard')->with('success', 'Workshop updated successfully.');
+    }
+
+    public function deleteWorkshop($id) {
+        $workshop = Workshop::find($id);
+        if ($workshop) {
+            $workshop->delete();
+        }
+
+        return redirect()->route('admin.dashboard')->with('success', 'Workshop deleted successfully.');
     }
 
 }
