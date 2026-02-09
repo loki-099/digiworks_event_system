@@ -16,4 +16,15 @@ class Workshop extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    protected $fillable = [
+        'event_id',
+        'name',
+        'description',
+        'speaker',
+        'capacity',
+        'venue',
+        'start_date',
+        'end_date'
+    ];
 }

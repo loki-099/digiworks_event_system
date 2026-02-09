@@ -36,6 +36,11 @@ Route::prefix('admin')->group(function () {
 
     // The new users management page
     Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
+    Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
+    Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
+    Route::put('/updateEvent/{id}', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
+    Route::put('/updateWorkshop/{id}', [AdminDashboardController::class, 'updateWorkshop'])->name('updateWorkshop');
+    Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');
 });
 
 require __DIR__ . '/auth.php';
