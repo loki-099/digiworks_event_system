@@ -218,7 +218,7 @@
                     @forelse ($workshops as $workshop)
                         <button type="button" data-modal-target="edit-workshop-modal-{{ $workshop->id }}" data-modal-toggle="edit-workshop-modal-{{ $workshop->id }}"
                             class="block relative max-w-full h-80 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left justify-end overflow-hidden cursor-pointer">
-                            <img src="{{ asset('images/event.png') }}" alt="placeholder" class="min-h-full min-w-full mb-4">
+                            <img src="{{ asset('images/protruding-squares.svg') }}" alt="placeholder" class="min-h-full min-w-full mb-4">
                             <div class="bg-linear-to-t from-gray-950 absolute top-0 bottom-0 right-0 left-0"></div>
                             <div class="absolute left-3 bottom-3">
                                 <p class="text-white text-2xl font-bold">{{ $workshop->name }}</p>

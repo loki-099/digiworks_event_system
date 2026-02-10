@@ -114,7 +114,7 @@
                             
                             {{-- 2. Reg Date --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700">
-                                {{ \Carbon\Carbon::parse($registration->registered_date)->format('d M Y') }}
+                                {{ \Carbon\Carbon::parse($registration->registered_date)->format('F j, Y, g:i A') }}
                             </td>
 
                             {{-- 3. Attendee Name --}}
@@ -134,7 +134,7 @@
 
                             {{-- 6. Workshop --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700">
-                                {{ $registration->workshop->name ?? 'General Admission' }}
+                                {{ $registration->workshop->name ?? 'Not Available' }}
                             </td>
 
                             {{-- 7. QR Value --}}
