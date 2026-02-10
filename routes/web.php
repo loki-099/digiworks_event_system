@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardAttendeeController;
-use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -37,14 +36,12 @@ Route::prefix('admin')->group(function () {
     });
 
     // The new users management page
-    Route::get('/users', [AdminDashboardAttendeeController::class, 'index'])->name('admin.users');
+    Route::get('/users', [AdminDashboardAttendeeController::class, 'index'])->name('admin.users')->middleware('admin');
     Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
     Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
     Route::put('/updateEvent/{id}', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
     Route::put('/updateWorkshop/{id}', [AdminDashboardController::class, 'updateWorkshop'])->name('updateWorkshop');
     Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');
-
-    Route::put('attendance/{qrcode}', [AttendanceController::class, 'mark'])->name('attendance.marl');
 });
 
 require __DIR__ . '/auth.php';

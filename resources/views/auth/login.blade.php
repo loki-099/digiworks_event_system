@@ -1,4 +1,6 @@
 @extends('layouts.guest')
+
+@section('name', 'Login')
 <!-- Session Status -->
 @section('content')
     <x-auth-session-status class="mb-4" :status="session('status')" />
