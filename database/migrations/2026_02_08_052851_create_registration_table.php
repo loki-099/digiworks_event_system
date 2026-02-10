@@ -32,8 +32,8 @@ Schema::create('registration', function (Blueprint $table) {
 
     $table->string('qr_code_value')->unique()->nullable();
     $table->string('status')->default('registered');
-    $table->timestamp('registered_date');
-    $table->timestamp('updated_at');
+    $table->timestamp('registered_date')->useCurrent();
+    $table->timestamps();
 });
     }
 

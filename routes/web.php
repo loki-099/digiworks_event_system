@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardAttendeeController;
+use App\Http\Controllers\Attendee\AttendeeDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -10,9 +11,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('attendee.dashboard');
-})->middleware(['auth'])->name('attendee.dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [AttendeeDashboardController::class, 'index'])
+        ->name('attendee.dashboard');
+    Route::post('/dashboard/workshops/{workshop}/join', [AttendeeDashboardController::class, 'joinWorkshop'])
+        ->name('attendee.workshops.join');
+    Route::post('/dashboard/workshops/{workshop}/cancel', [AttendeeDashboardController::class, 'cancelWorkshop'])
+        ->name('attendee.workshops.cancel');
+});
 
 
 Route::prefix('admin')->group(function () {
