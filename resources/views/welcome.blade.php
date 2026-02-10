@@ -37,7 +37,7 @@
     <main class="relative flex-grow flex flex-col items-center justify-center px-4 text-center py-20 bg-gray-900 overflow-hidden">
     
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/protruding-squares.svg') }}" 
+            <img src="{{ asset('images/event.png') }}" 
                 alt="Event Background" 
                 class="w-full h-full object-cover object-center opacity-40">
             
@@ -50,7 +50,7 @@
             </h1>
             
             <p class="text-gray-200 max-w-2xl mb-10 text-lg drop-shadow-md">
-                PlaceHolder 
+                A showcase of local digital innovation and technology.Join us at the <strong>University of Southern Mindanao</strong> this March 2-4 for an immersive experience in the future of work. 
             </p> <div class="flex flex-wrap justify-center gap-4">
                 <a href="{{ route('register') }}" class="text-white bg-blue-700 hover:bg-blue-800 shadow-md font-medium rounded-lg text-base px-6 py-3 transition-all hover:scale-105">
                     Register Now
@@ -61,7 +61,7 @@
             </div>
         </div>
     </main>
-    <section id="about" class="w-full bg-white dark:bg-gray-900 py-20 px-4">
+   <section id="about" class="w-full bg-white dark:bg-gray-900 py-20 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold dark:text-white mb-8 text-center md:text-left">About the Event</h2>
             
@@ -69,20 +69,23 @@
                 <div>
                     <h3 class="text-xl font-semibold dark:text-blue-400 mb-3">What is DigiWork?</h3>
                     <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        PlaceHolder
+                        DigiWork Expo is the premier digital gathering in Cotabato, designed to bridge the gap between local talent and global technological trends. We bring together developers, students, and tech enthusiasts to explore the evolving landscape of digital careers and innovation.
                     </p>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold dark:text-blue-400 mb-3">Event Highlights</h3>
                     <ul class="text-gray-600 dark:text-gray-400 space-y-2">
                         <li class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Blahhblahhh
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> 
+                            Connect with alumni and industry leaders.
                         </li>
                         <li class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Testingtestinh
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> 
+                            Seamless entry via secure QR code registration.
                         </li>
                         <li class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> you can put shit here
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> 
+                            Explore workshops from the top digital organizations.
                         </li>
                     </ul>
                 </div>
