@@ -66,64 +66,92 @@
                 </li>
             </ul>
         </div>
-    </aside>
-    {{-- Main Content Area --}}
-        <div class="p-4 sm:ml-64 min-h-screen dark:bg-gray-950">
-            <div class="p-4 mt-14">
-                {{-- Page Header --}}
-                <div class="flex items-center justify-between mb-6">
-                    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Event Attendees</h1>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Total: {{ $registrations->count() }}</p>
-                </div>
+    </aside>{{-- Main Content Area --}}
+    <div class="p-4 sm:ml-64 min-h-screen dark:bg-gray-950">
+        <div class="p-4 mt-14">
+            {{-- Page Header --}}
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Event Attendees</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Total: {{ $registrations->count() }}</p>
+            </div>
 
-                {{-- Search Bar --}}
-                <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-                    <form action="{{ route('admin.users') }}" method="GET" class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                        </div>
-                        <input type="text" name="search" value="{{ request('search') }}" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Search for attendees...">
-                    </form>
-                    @if(request('search'))
-                        <a href="{{ route('admin.users') }}" class="text-sm text-blue-600 hover:underline">Clear Search</a>
-                    @endif
-                </div>
+            {{-- Search Bar --}}
+            <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+                <form action="{{ route('admin.users') }}" method="GET" class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <input type="text" name="search" value="{{ request('search') }}" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Search for attendees...">
+                </form>
+                @if(request('search'))
+                    <a href="{{ route('admin.users') }}" class="text-sm text-blue-600 hover:underline">Clear Search</a>
+                @endif
+            </div>
 
-                {{-- Excel-Style Table --}}
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th class="px-6 py-3 border-r dark:border-gray-600">Reg ID</th>
-                                <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
-                                <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
-                                <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
-                                <th class="px-6 py-3 border-r dark:border-gray-600">Status</th>
-                                <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
-                                <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
-                                <th class="px-6 py-3">Reg. Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($registrations as $registration)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">#{{ $registration->id }}</td>
-                                <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">{{ $registration->attendee->name ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 border-r dark:border-gray-700">{{ $registration->attendee->email ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 border-r dark:border-gray-700 italic">{{ $registration->attendee->affiliation ?? '—' }}</td>
-                                <td class="px-6 py-4 border-r dark:border-gray-700 text-center">
-                                    <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->status === 'registered' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
-                                        {{ strtoupper($registration->status) }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 border-r dark:border-gray-700">{{ $registration->workshop->name ?? 'General Admission' }}</td>
-                                <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">{{ $registration->qr_code_value ?? 'Pending' }}</td>
-                                <td class="px-6 py-4">{{ \Carbon\Carbon::parse($registration->registered_date)->format('d M Y') }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+            {{-- Excel-Style Table: Re-arranged Flow --}}
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th class="px-6 py-3 border-r dark:border-gray-600 text-center">Reg ID</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Reg. Date</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
+                            <th class="px-6 py-3 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($registrations as $registration)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            {{-- 1. Reg ID --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs text-center">#{{ $registration->id }}</td>
+                            
+                            {{-- 2. Reg Date --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700">
+                                {{ \Carbon\Carbon::parse($registration->registered_date)->format('d M Y') }}
+                            </td>
+
+                            {{-- 3. Attendee Name --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
+                                {{ $registration->attendee->name ?? 'N/A' }}
+                            </td>
+
+                            {{-- 4. Email --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700">
+                                {{ $registration->attendee->email ?? 'N/A' }}
+                            </td>
+
+                            {{-- 5. Affiliation --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700 italic">
+                                {{ $registration->attendee->affiliation ?? '—' }}
+                            </td>
+
+                            {{-- 6. Workshop --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700">
+                                {{ $registration->workshop->name ?? 'General Admission' }}
+                            </td>
+
+                            {{-- 7. QR Value --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">
+                                {{ $registration->qr_code_value ?? 'Pending' }}
+                            </td>
+
+                            {{-- 8. Status --}}
+                            <td class="px-6 py-4 text-center">
+                                <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->status === 'registered' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                                    {{ strtoupper($registration->status) }}
+                                </span>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
