@@ -7,9 +7,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Workshop extends Model
 {
-    //
+    protected $table = 'workshop';
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get registrations for this workshop.
+     */
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
     }
 }

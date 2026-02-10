@@ -6,10 +6,41 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registration extends Model
 {
-    //
+    protected $table = 'registration';
 
+    protected $fillable = [
+        'attendee_id',
+        'event_id',
+        'workshop_id',
+        'qr_code_value',
+        'status',
+        'registered_date',
+    ];
 
-    
     public const CREATED_AT = 'registered_date';
     public const UPDATED_AT = 'updated_at';
+
+    /**
+     * Get the attendee user.
+     */
+    public function attendee()
+    {
+        return $this->belongsTo(User::class, 'attendee_id');
+    }
+
+    /**
+     * Get the event.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Get the workshop.
+     */
+    public function workshop()
+    {
+        return $this->belongsTo(Workshop::class);
+    }
 }
