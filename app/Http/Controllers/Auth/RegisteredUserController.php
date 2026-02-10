@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Registration;
+use App\Models\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -45,6 +48,19 @@ class RegisteredUserController extends Controller
             'position' => $request->position,
         ]);
 
+        // Create a registration record for the new user.
+        // Fetch the first event and use its ID, workshop is null for now.
+        $event = Event::first();
+        Registration::create([
+            'attendee_id' => $user->id,
+            'event_id' => $event->id,
+            'workshop_id' => null,
+            'qr_code_value' => Str::uuid()->toString(),
+            'status' => 'registered',
+        ]);
+
+
+        
         event(new Registered($user));
 
         Auth::login($user);

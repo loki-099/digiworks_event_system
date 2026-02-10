@@ -7,27 +7,26 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
-    //
     protected $table = 'event';
-
-    public function workshops(): HasMany
-    {
-        return $this->hasMany(Workshop::class);
-    }
 
     protected $fillable = [
         'name',
         'description',
         'venue',
         'start_date',
-        'end_date'
+        'end_date',
     ];
 
-    protected function casts(): array
+    public function workshops(): HasMany
     {
-        return [
-            'start_date' => 'datetime',
-            'end_date' => 'datetime',
-        ];
+        return $this->hasMany(Workshop::class);
+    }
+
+    /**
+     * Get registrations for this event.
+     */
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class);
     }
 }

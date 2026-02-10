@@ -27,6 +27,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get registrations for this user.
+     */
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'attendee_id');
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>
