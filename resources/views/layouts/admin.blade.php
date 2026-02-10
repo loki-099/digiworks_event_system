@@ -135,24 +135,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     @yield('scripts')
-    <script>
-        function onScanSuccess(decodedText) {
-            // Redirect to Laravel route
-            window.location.href = decodedText;
-        }
-
-        const html5QrCode = new Html5Qrcode("reader");
-
-        html5QrCode.start({
-                facingMode: "environment"
-            }, {
-                fps: 10,
-                qrbox: 250
-            },
-            onScanSuccess
-        );
-    </script>
-
 </body>
 
 </html>
