@@ -8,6 +8,7 @@
 
     <title>Admin | @yield('title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://unpkg.com/html5-qrcode"></script>
 
 </head>
 
@@ -40,8 +41,7 @@
                                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-8 h-8 rounded-full"
-                                    src="{{ asset('images/user.jpg') }}" alt="user photo">
+                                <img class="w-8 h-8 rounded-full" src="{{ asset('images/user.jpg') }}" alt="user photo">
                             </button>
                         </div>
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600"
@@ -135,6 +135,23 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     @yield('scripts')
+    <script>
+        function onScanSuccess(decodedText) {
+            // Redirect to Laravel route
+            window.location.href = decodedText;
+        }
+
+        const html5QrCode = new Html5Qrcode("reader");
+
+        html5QrCode.start({
+                facingMode: "environment"
+            }, {
+                fps: 10,
+                qrbox: 250
+            },
+            onScanSuccess
+        );
+    </script>
 
 </body>
 

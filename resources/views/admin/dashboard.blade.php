@@ -81,7 +81,7 @@
             </div>
         </div>
     </nav> --}}
-{{-- 
+    {{-- 
     <aside id="logo-sidebar"
         class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidebar">
@@ -184,14 +184,13 @@
                     </div>
 
                     {{-- CARD 3 --}}
-                    <div
-                        class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer">
+                    <div class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer"
+                        data-modal-target="qr-code-scanner" data-modal-toggle="qr-code-scanner" onclick="startScanner()">
                         <div>
                             <span
                                 class="w-16 h-16 p-1 bg-brand group-hover:bg-brand-strong box-border border border-transparent rounded-sm flex items-center justify-center">
-                                <svg class="w-full h-full text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
+                                <svg class="w-full h-full text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
                                         d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
@@ -203,7 +202,7 @@
                         <div>
                             <p class="text-3xl font-bold text-white">Scan QR Code</p>
                             <h2 class="text-sm">Check-in</h2>
-                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-10 flex items-center justify-between">
@@ -216,9 +215,11 @@
                 {{-- WORKSHOPS GRID --}}
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
                     @forelse ($workshops as $workshop)
-                        <button type="button" data-modal-target="edit-workshop-modal-{{ $workshop->id }}" data-modal-toggle="edit-workshop-modal-{{ $workshop->id }}"
+                        <button type="button" data-modal-target="edit-workshop-modal-{{ $workshop->id }}"
+                            data-modal-toggle="edit-workshop-modal-{{ $workshop->id }}"
                             class="block relative max-w-full h-80 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left justify-end overflow-hidden cursor-pointer">
-                            <img src="{{ asset('images/protruding-squares.svg') }}" alt="placeholder" class="min-h-full min-w-full mb-4">
+                            <img src="{{ asset('images/protruding-squares.svg') }}" alt="placeholder"
+                                class="min-h-full min-w-full mb-4">
                             <div class="bg-linear-to-t from-gray-950 absolute top-0 bottom-0 right-0 left-0"></div>
                             <div class="absolute left-3 bottom-3">
                                 <p class="text-white text-2xl font-bold">{{ $workshop->name }}</p>
@@ -231,7 +232,8 @@
                         </button>
                     @empty
                         <button
-                            class="block relative max-w-full h-80 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left justify-end overflow-hidden cursor-pointer" data-modal-target="add-workshop-modal" data-modal-toggle="add-workshop-modal">
+                            class="block relative max-w-full h-80 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left justify-end overflow-hidden cursor-pointer"
+                            data-modal-target="add-workshop-modal" data-modal-toggle="add-workshop-modal">
                             <div class="z-10">
                                 <p class="text-gray-400 text-2xl font-bold text-center">No Workshop</p>
                                 <p class="text-gray-400 text-sm font-bold text-center">Add a Workshop</p>
@@ -531,44 +533,49 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="p-6 space-y-6">
-                                    <form id="update-workshop-form-{{ $workshop->id }}" class="space-y-4" action="{{ route('updateWorkshop', $workshop->id) }}" method="POST">
+                                    <form id="update-workshop-form-{{ $workshop->id }}" class="space-y-4"
+                                        action="{{ route('updateWorkshop', $workshop->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div>
                                             <label for="edit_workshop_name_{{ $workshop->id }}"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Name</label>
-                                            <input type="text" name="name" id="edit_workshop_name_{{ $workshop->id }}" placeholder="Workshop name"
-                                                value="{{ $workshop->name }}"
+                                            <input type="text" name="name" id="edit_workshop_name_{{ $workshop->id }}"
+                                                placeholder="Workshop name" value="{{ $workshop->name }}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                         </div>
 
                                         <div>
                                             <label for="edit_workshop_description_{{ $workshop->id }}"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                                            <textarea id="edit_workshop_description_{{ $workshop->id }}" name="description" rows="4" placeholder="Workshop description"
+                                            <textarea id="edit_workshop_description_{{ $workshop->id }}" name="description" rows="4"
+                                                placeholder="Workshop description"
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">{{ $workshop->description }}</textarea>
                                         </div>
 
                                         <div>
                                             <label for="edit_workshop_speaker_{{ $workshop->id }}"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Speaker</label>
-                                            <input type="text" name="speaker" id="edit_workshop_speaker_{{ $workshop->id }}"
-                                                placeholder="Speaker name" value="{{ $workshop->speaker }}"
+                                            <input type="text" name="speaker"
+                                                id="edit_workshop_speaker_{{ $workshop->id }}" placeholder="Speaker name"
+                                                value="{{ $workshop->speaker }}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                         </div>
 
                                         <div>
                                             <label for="edit_workshop_venue_{{ $workshop->id }}"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Venue</label>
-                                            <input type="text" name="venue" id="edit_workshop_venue_{{ $workshop->id }}"
-                                                placeholder="Venue or location" value="{{ $workshop->venue }}"
+                                            <input type="text" name="venue"
+                                                id="edit_workshop_venue_{{ $workshop->id }}" placeholder="Venue or location"
+                                                value="{{ $workshop->venue }}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                         </div>
 
                                         <div>
                                             <label for="edit_workshop_capacity_{{ $workshop->id }}"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Capacity</label>
-                                            <input type="number" name="capacity" id="edit_workshop_capacity_{{ $workshop->id }}"
+                                            <input type="number" name="capacity"
+                                                id="edit_workshop_capacity_{{ $workshop->id }}"
                                                 placeholder="Maximum participants" value="{{ $workshop->capacity }}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                         </div>
@@ -578,7 +585,8 @@
                                                 <label for="edit_workshop_start_date_{{ $workshop->id }}"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Start
                                                     Date</label>
-                                                <input type="datetime-local" name="start_date" id="edit_workshop_start_date_{{ $workshop->id }}"
+                                                <input type="datetime-local" name="start_date"
+                                                    id="edit_workshop_start_date_{{ $workshop->id }}"
                                                     value="{{ date('Y-m-d\TH:i', strtotime($workshop->start_date)) }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                             </div>
@@ -586,7 +594,8 @@
                                                 <label for="edit_workshop_end_date_{{ $workshop->id }}"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">End
                                                     Date</label>
-                                                <input type="datetime-local" name="end_date" id="edit_workshop_end_date_{{ $workshop->id }}"
+                                                <input type="datetime-local" name="end_date"
+                                                    id="edit_workshop_end_date_{{ $workshop->id }}"
                                                     value="{{ date('Y-m-d\TH:i', strtotime($workshop->end_date)) }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                             </div>
@@ -595,23 +604,24 @@
                                         <!-- end form inputs -->
                                     </form>
 
-                                        <!-- Modal footer -->
-                                        <div class="flex items-center justify-between pt-4 border-t dark:border-gray-600">
-                                            <div class="flex items-center space-x-2">
-                                                <button data-modal-hide="edit-workshop-modal-{{ $workshop->id }}" type="button"
-                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg border border-gray-200 text-sm px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Cancel</button>
-                                                <button form="update-workshop-form-{{ $workshop->id }}" type="submit"
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
-                                            </div>
-                                            <div class="flex items-center space-x-2">
-                                                <form action="{{ route('deleteWorkshop', $workshop->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this workshop?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none">Delete</button>
-                                                </form>
-                                            </div>
+                                    <!-- Modal footer -->
+                                    <div class="flex items-center justify-between pt-4 border-t dark:border-gray-600">
+                                        <div class="flex items-center space-x-2">
+                                            <button data-modal-hide="edit-workshop-modal-{{ $workshop->id }}" type="button"
+                                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg border border-gray-200 text-sm px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Cancel</button>
+                                            <button form="update-workshop-form-{{ $workshop->id }}" type="submit"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
                                         </div>
+                                        <div class="flex items-center space-x-2">
+                                            <form action="{{ route('deleteWorkshop', $workshop->id) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure you want to delete this workshop?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -619,6 +629,83 @@
                 @empty
                 @endforelse
             @endisset
+
+            {{-- QR CODE SCANNER MODAL --}}
+            <div id="qr-code-scanner" tabindex="-1" aria-hidden="true"
+                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto mx-auto">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                Scan QR Code
+                            </h3>
+                            <button type="button"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                data-modal-hide="qr-code-scanner" onclick="stopScanner()">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6 text-center">
+                            <div
+                                class="w-full max-w-xs sm:max-w-sm aspect-square mx-auto rounded-xl overflow-hidden shadow-lg">
+                                <div id="reader" class="w-full h-full"></div>
+                            </div>
+                            <p class="text-green-400 text-xl font-bold">Scanning...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        const html5QrCode = new Html5Qrcode("reader");
+        let isScanning = false;
+
+        function startScanner() {
+            if (isScanning) return;
+
+            html5QrCode.start({
+                    facingMode: "environment"
+                }, {
+                    fps: 10,
+                    qrbox: 250
+                },
+                (decodedText) => {
+                    console.log("Scanned:", decodedText);
+
+                    // Optional: auto-stop after successful scan
+                    stopScanner();
+
+                    // Redirect
+                    window.location.href = decodedText;
+                }
+            ).then(() => {
+                isScanning = true;
+            }).catch(err => {
+                console.error("Camera start error:", err);
+            });
+        }
+
+        function stopScanner() {
+            if (!isScanning) return;
+
+            html5QrCode.stop().then(() => {
+                html5QrCode.clear();
+                isScanning = false;
+            }).catch(err => {
+                console.error("Camera stop error:", err);
+            });
+        }
+    </script>
 @endsection
