@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Registration;
 use App\Models\Workshop;
-use PhpParser\Node\Expr\FuncCall;
+use Illuminate\Support\Facades\Auth;
+
 // class AdminDashboardController extends Controller
 // {
 //     public function index()
@@ -25,14 +26,15 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
+        $admin = Auth::user();
         $users = User::where('role','!=', 'admin') ->get();
         $event = Event::all()->first();
         $workshops = Workshop::all();
-        return view('admin.dashboard', compact('event', 'workshops'));
+        return view('admin.dashboard', compact('event', 'workshops', 'admin'));
     }
 
     public function addEvent(Request $request) {
-        $request->validate([
+        $request->validate([ 
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'start_date' => 'required|date',
@@ -135,8 +137,10 @@ class AdminDashboardController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Workshop deleted successfully.');
     }
     // handles the separte users page in admin dashboard
+
     public function users(Request $request)
     {
+        $admin = Auth::user();
         $query = Registration::with(['attendee', 'workshop']);
 
         // Check if there is a search term
@@ -151,6 +155,6 @@ class AdminDashboardController extends Controller
 
         $registrations = $query->get();
 
-        return view('admin.adminUsers', compact('registrations'));
+        return view('admin.adminUsers', compact('registrations', 'admin'));
     }
 }

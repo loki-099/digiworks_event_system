@@ -4,7 +4,7 @@
 
 
 @section('content')
-    <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    {{-- <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start rtl:justify-end">
@@ -39,10 +39,10 @@
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                    Neil Sims
+                                    {{ $admin->name }}
                                 </p>
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                    neil.sims@flowbite.com
+                                    {{ $admin->email }}
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
@@ -80,14 +80,14 @@
                 </div>
             </div>
         </div>
-    </nav>
-
+    </nav> --}}
+{{-- 
     <aside id="logo-sidebar"
         class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidebar">
         <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
-            {{-- Dashboard Link --}}
+            Dashboard Link
             <li>
                 <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ Request::routeIs('admin.dashboard') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
@@ -100,7 +100,7 @@
                 </a>
             </li>
 
-            {{-- User Page link --}}
+            User Page link
             <li>
                 <a href="{{ route('admin.users') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ Request::routeIs('admin.users') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
@@ -114,7 +114,9 @@
         </ul>
         </div>
     </aside>
+  --}}
 
+    {{-- MAIN CONTENT --}}
     <div class="p-4 sm:ml-64 min-h-screen dark:bg-gray-950">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
             @isset($event)
@@ -183,11 +185,11 @@
 
                     {{-- CARD 3 --}}
                     <div
-                        class="flex items-center justify-start gap-x-4 dark:text-white px-4 h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
+                        class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer">
                         <div>
                             <span
-                                class="w-16 h-16 p-1 bg-white dark:bg-gray-800 border border-gray-600 rounded-sm flex items-center justify-center">
-                                <svg class="w-full h-full text-gray-800 dark:text-white" aria-hidden="true"
+                                class="w-16 h-16 p-1 bg-brand group-hover:bg-brand-strong box-border border border-transparent rounded-sm flex items-center justify-center">
+                                <svg class="w-full h-full text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                     viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
@@ -199,9 +201,9 @@
                             </span>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold text-gray-950 dark:text-white">Scan QR Code</p>
+                            <p class="text-3xl font-bold text-white">Scan QR Code</p>
                             <h2 class="text-sm">Check-in</h2>
-                        </div>
+                            </div>
                     </div>
                 </div>
                 <div class="mt-10 flex items-center justify-between">
