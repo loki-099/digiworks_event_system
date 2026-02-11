@@ -22,7 +22,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $event = Event::first(); // Fetch the first event
+        $workshops = Event::first()->workshops; // Fetch workshops for the first event
+        return view('auth.register', compact('workshops', 'event'));
     }
 
     /**
@@ -32,10 +34,14 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request->all());
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'type' => ['required', 'string', 'max:255'],
+            'is_going' => 'boolean',
+            'workshop' => 'nullable|exists:workshop,id',
             'affiliation' => ['required', 'string', 'max:255'],
             'position' => ['required', 'string', 'max:255'],
         ]);
@@ -43,7 +49,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'type' => $request->type,
             'affiliation' => $request->affiliation,
             'position' => $request->position,
         ]);
@@ -54,7 +60,8 @@ class RegisteredUserController extends Controller
         Registration::create([
             'attendee_id' => $user->id,
             'event_id' => $event->id,
-            'workshop_id' => null,
+            'workshop_id' => $request->workshop, // This can be null if no workshop is selected
+            'is_going' => $request->boolean('is_going'),
             'qr_code_value' => Str::uuid()->toString(),
             'status' => 'registered',
         ]);
