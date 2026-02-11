@@ -75,7 +75,7 @@
                     </div>
                     <div>
                         <span class="block text-xs uppercase tracking-widest text-gray-500 mb-1">Where</span>
-                        <span class="text-sm font-semibold dark:text-gray-200">Kabacan, Cotabato</span>
+                        <span class="text-sm font-semibold dark:text-gray-200">University of Southern Mindanao, Kabacan, Cotabato</span>
                     </div>
                 </div>
             </div>

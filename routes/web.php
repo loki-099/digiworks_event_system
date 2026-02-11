@@ -6,20 +6,22 @@ use App\Http\Controllers\Attendee\AttendeeDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\QrCodeController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/download-qrcode', [QrCodeController::class, 'downloadQRCode'])->name('download.qrcode');
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AttendeeDashboardController::class, 'index'])
-        ->name('attendee.dashboard');
+    Route::get('/success', [AttendeeDashboardController::class, 'index'])
+        ->name('attendee.success');
     Route::post('/dashboard/workshops/{workshop}/join', [AttendeeDashboardController::class, 'joinWorkshop'])
         ->name('attendee.workshops.join');
     Route::post('/dashboard/workshops/{workshop}/cancel', [AttendeeDashboardController::class, 'cancelWorkshop'])
         ->name('attendee.workshops.cancel');
 });
-
 
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
