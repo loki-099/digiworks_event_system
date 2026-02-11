@@ -62,8 +62,9 @@ class RegisteredUserController extends Controller
             'event_id' => $event->id,
             'workshop_id' => $request->workshop, // This can be null if no workshop is selected
             'is_going' => $request->boolean('is_going'),
-            'qr_code_value' => Str::uuid()->toString(),
-            'status' => 'registered',
+            'qr_code_value' => Str::random(10),
+            'status' => $request->boolean('is_going') ? 'registered' : 'not_going',
+            'workshop_status' => 'registered'
         ]);
 
 

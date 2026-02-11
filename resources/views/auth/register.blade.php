@@ -93,20 +93,24 @@
                     <div class="flex gap-x-8 mb-6">
                         <div class="flex items-center gap-x-4">
                             <input type="hidden" name="is_going" value="0">
-                            <input id="is_going" type="checkbox" name="is_going" value="1" {{ old('is_going', 1) ? 'checked' : '' }}
+                            <input id="is_going" type="checkbox" name="is_going" value="1"
+                                {{ old('is_going', 1) ? 'checked' : '' }}
                                 class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="is_going" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">
+                            <label for="is_going"
+                                class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">
                                 <div
                                     class="flex items-center justify-center relative max-w-full max-h-40 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left overflow-hidden cursor-pointe">
                                     <img src="{{ asset('/images/event.png') }}" alt="">
                                     <div class="bg-linear-to-t from-gray-950 absolute top-0 bottom-0 right-0 left-0"></div>
                                     <div class="absolute left-3 bottom-3">
-                                        <p class="text-white text-2xl font-bold">Main Event</p>
+                                        <p class="text-white text-2xl font-bold">{{ $event->name }}</p>
                                         <p class="text-white text-sm font-medium">From:
-                                            Mock
+                                            {{ date('F d, Y g:iA', strtotime($event->start_date)) }}
                                         </p>
                                         <p class="text-white text-sm font-medium">To:
-                                            Mock</p>
+                                            {{ date('F d, Y g:iA', strtotime($event->end_date)) }}
+
+                                        </p>
                                     </div>
                                 </div>
                             </label>
@@ -124,10 +128,13 @@
                                     class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 w-full">
                                     <div
                                         class="flex items-center justify-center relative max-w-full max-h-40 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left overflow-hidden cursor-pointer">
-                                        <img src="{{ asset('/images/subtle-prism.svg') }}" alt="" class="w-full">
-                                        <div class="bg-linear-to-t from-gray-950 absolute top-0 bottom-0 right-0 left-0"></div>
+                                        <img src="{{ asset('/images/subtle-prism.svg') }}" alt=""
+                                            class="w-full">
+                                        <div class="bg-linear-to-t from-gray-950 absolute top-0 bottom-0 right-0 left-0">
+                                        </div>
                                         <div class="absolute left-3 bottom-3">
-                                            <p class="text-white text-2xl font-bold leading-6 mb-1">{{ $workshop->name }}</p>
+                                            <p class="text-white text-2xl font-bold leading-6 mb-1">{{ $workshop->name }}
+                                            </p>
                                             <p class="text-white text-sm font-medium">From:
                                                 {{ date('F d, Y g:iA', strtotime($workshop->start_date)) }}
                                             </p>

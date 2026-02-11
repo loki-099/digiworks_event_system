@@ -16,6 +16,7 @@ class Registration extends Model
         'qr_code_value',
         'is_going',
         'status',
+        'workshop_status',
         'registered_date',
     ];
 

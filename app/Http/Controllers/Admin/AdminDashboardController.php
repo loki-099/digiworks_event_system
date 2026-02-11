@@ -29,8 +29,9 @@ class AdminDashboardController extends Controller
         $admin = Auth::user();
         $users = User::where('role','!=', 'admin') ->get();
         $event = Event::all()->first();
+        $attendees = Registration::all()->count();
         $workshops = Workshop::all();
-        return view('admin.dashboard', compact('event', 'workshops', 'admin'));
+        return view('admin.dashboard', compact('event', 'workshops', 'admin', 'attendees'));
     }
 
     public function addEvent(Request $request) {

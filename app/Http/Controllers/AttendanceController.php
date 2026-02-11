@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Registration;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
     //
-    public function mark(Request $request, $qrcode) {
-        
+    public function event() {
+        return view('admin.attendance');
+    }
+
+    public function markEvent($qrcodevalue) {
+        $registration = Registration::where('qr_code_value', $qrcodevalue)->where('status', 'registered')->first();
+        if ($registration) {
+            $registration->status = 'checked_in';
+            $registration->save();
+
+            return response()->json(['message' => 'Attendance marked successfully.']);
+        }
     }
 }

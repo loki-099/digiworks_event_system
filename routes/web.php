@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardAttendeeController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Attendee\AttendeeDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return redirect('/admin/login');
     });
+
+    Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');
+    Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent'])->name('attendance.event');
 
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])
         ->name('admin.login');

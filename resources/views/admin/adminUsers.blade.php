@@ -100,10 +100,11 @@
                             <th class="px-6 py-3 border-r dark:border-gray-600">Reg. Date</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation(School/Organization)</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Workshop Status</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
-                            <th class="px-6 py-3 text-center">Status</th>
+                            <th class="px-6 py-3 text-center">Event Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -137,14 +138,21 @@
                                 {{ $registration->workshop->name ?? 'Not Available' }}
                             </td>
 
-                            {{-- 7. QR Value --}}
+                            {{-- 7. Workshop Status --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700">
+                                <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->workshop_status === 'registered' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-800' }}">
+                                    {{ strtoupper($registration->workshop_status) }}
+                                </span>
+                            </td>
+
+                            {{-- 8. QR Value --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">
                                 {{ $registration->qr_code_value ?? 'Pending' }}
                             </td>
 
-                            {{-- 8. Status --}}
+                            {{-- 9. Event Status --}}
                             <td class="px-6 py-4 text-center">
-                                <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->status === 'registered' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                                <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->status === 'registered' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-800' }}">
                                     {{ strtoupper($registration->status) }}
                                 </span>
                             </td>

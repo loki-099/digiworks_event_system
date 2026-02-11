@@ -156,7 +156,7 @@
                             </span>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold text-gray-950 dark:text-white">3</p>
+                            <p class="text-3xl font-bold text-gray-950 dark:text-white">{{ $attendees }}</p>
                             <h2 class="text-sm">Total Registered</h2>
                         </div>
                     </div>
@@ -184,8 +184,7 @@
                     </div>
 
                     {{-- CARD 3 --}}
-                    <div class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer"
-                        data-modal-target="qr-code-scanner" data-modal-toggle="qr-code-scanner" onclick="startScanner()">
+                    <a href="{{ route('attendance.event')}}" class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer">
                         <div>
                             <span
                                 class="w-16 h-16 p-1 bg-brand group-hover:bg-brand-strong box-border border border-transparent rounded-sm flex items-center justify-center">
@@ -203,7 +202,7 @@
                             <p class="text-3xl font-bold text-white">Scan QR Code</p>
                             <h2 class="text-sm">Check-in</h2>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="mt-10 flex items-center justify-between">
                     <h1 class="text-3xl text-gray-950 dark:text-white font-bold">Workshops</h1>
@@ -631,38 +630,6 @@
             @endisset
 
             {{-- QR CODE SCANNER MODAL --}}
-            <div id="qr-code-scanner" tabindex="-1" aria-hidden="true"
-                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto mx-auto">
-                    <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <!-- Modal header -->
-                        <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Scan QR Code
-                            </h3>
-                            <button type="button"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-hide="qr-code-scanner" onclick="stopScanner()">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="p-6 space-y-6 text-center">
-                            <div
-                                class="w-full max-w-xs sm:max-w-sm aspect-square mx-auto rounded-xl overflow-hidden shadow-lg">
-                                <div id="reader" class="w-full h-full"></div>
-                            </div>
-                            <p class="text-green-400 text-xl font-bold">Scanning...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
@@ -688,7 +655,7 @@
                     stopScanner();
 
                     // Redirect
-                    window.location.href = decodedText;
+                    window.location.href = route + decodedText;
                 }
             ).then(() => {
                 isScanning = true;
