@@ -54,6 +54,7 @@ Route::prefix('admin')->group(function () {
         Route::put('/updateWorkshop/{id}', [AdminDashboardController::class, 'updateWorkshop'])->name('updateWorkshop');
         Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');
     });
+    Route::get('export-registrations', [AdminDashboardController::class, 'export'])->name('admin.export');
 
     // 4. Shared Auth Routes (Profile)
     Route::middleware('auth')->group(function () {

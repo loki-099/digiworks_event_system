@@ -160,4 +160,9 @@ class AdminDashboardController extends Controller
 
         return view('admin.adminUsers', compact('registrations', 'admin'));
     }
+
+    public function export() 
+    {
+        return Excel::download(new RegistrationsExport, 'registrations_2026.xlsx');
+    }
 }
