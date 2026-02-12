@@ -24,6 +24,7 @@ class AttendanceController extends Controller
     public function markEvent($qrcodevalue)
     {
         $registration = Registration::where('qr_code_value', $qrcodevalue)->first();
+        
         if (!$registration) {
             return response()->json([
                 'success' => false,
@@ -31,21 +32,24 @@ class AttendanceController extends Controller
             ], 404);
         }
 
+        // Check if already checked into the main event
         if ($registration->status === 'checked_in') {
             return response()->json([
                 'success' => false,
-                'message' => 'Already checked in.'
+                'message' => 'Already checked in to the event.'
             ]);
         }
 
         if ($registration->status === 'not_going') {
             return response()->json([
                 'success' => false,
-                'message' => 'This attendee is not going to the main event.'
+                'message' => 'This attendee is marked as NOT GOING.'
             ]);
         }
 
+        // AUTO-UPDATE: Set both main status and workshop status on event entry
         $registration->status = 'checked_in';
+        $registration->workshop_status = 'checked_in'; 
         $registration->save();
 
         Attendance::create([
@@ -55,25 +59,27 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Attendance marked successfully.'
+            'message' => 'Event and Workshop attendance marked successfully!',
+            'attendee' => $registration->attendee->name ?? 'Attendee'
         ]);
     }
-
     public function markWorkshop($workshop_id, $qrcodevalue)
     {
-        $registration = Registration::where('qr_code_value', $qrcodevalue)->where('workshop_id', $workshop_id)->first();
-        Log::info($registration);
+        $registration = Registration::where('qr_code_value', $qrcodevalue)
+            ->where('workshop_id', $workshop_id)
+            ->first();
+
         if (!$registration) {
             return response()->json([
                 'success' => false,
-                'message' => 'QR Code not found.'
+                'message' => 'Attendee not registered for this specific workshop.'
             ], 404);
         }
 
         if ($registration->workshop_status === 'checked_in') {
             return response()->json([
                 'success' => false,
-                'message' => 'Already checked in.'
+                'message' => 'Already checked in to this workshop.'
             ]);
         }
 
@@ -87,10 +93,9 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Attendance marked successfully.'
+            'message' => 'Workshop attendance marked successfully.'
         ]);
     }
-
     // Manual Workshop Status Update from Admin Table
     public function updateWorkshopStatus(Request $request, $id) {
         $registration = Registration::findOrFail($id);
