@@ -1,6 +1,6 @@
 @extends('layouts.attendance')
 
-@section('name', 'Attendance Event')
+@section('name', 'Event Attendance')
 
 @section('content')
     <div>
@@ -52,11 +52,13 @@
                         .then(data => {
                             // handle success, maybe redirect or show a message
                             window.location.href = '/admin/attendance/event'; // or wherever you want
-                            alert('Attendance updated successfully!');
+                            alert(data.message);
                         })
                         .catch(error => {
                             // handle error
                             alert('Failed to update attendance.');
+                            console.log(error);
+                            
                         });
 
                 }

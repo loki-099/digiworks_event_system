@@ -46,4 +46,8 @@ class Registration extends Model
     {
         return $this->belongsTo(Workshop::class);
     }
+
+    public function attendances() {
+        return $this->hasMany(Attendance::class, 'registration_id');
+    }
 }
