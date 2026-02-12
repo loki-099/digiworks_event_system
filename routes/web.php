@@ -59,13 +59,15 @@ Route::prefix('admin')->group(function () {
         Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');
     });
     Route::get('export-registrations', [AdminDashboardController::class, 'export'])->name('admin.export');
+    Route::put('workshop/{id}/update', [AttendanceController::class, 'updateWorkshopStatus'])
+    ->name('admin.workshop.update');
 
     // 4. Shared Auth Routes (Profile)
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    });
+        });
 });
 
 require __DIR__ . '/auth.php';

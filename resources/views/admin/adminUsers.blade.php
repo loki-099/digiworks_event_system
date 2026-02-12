@@ -98,73 +98,65 @@
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th class="px-6 py-3 border-r dark:border-gray-600 text-center">Reg ID</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Reg. Date</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Workshop Status</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
-                            <th class="px-6 py-3 text-center">Event Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($registrations as $registration)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs text-center">#{{ $registration->id }}</td>
-                            
-                            <td class="px-6 py-4 border-r dark:border-gray-700 whitespace-nowrap">
-                                {{ \Carbon\Carbon::parse($registration->registered_date)->format('M j, Y, g:i A') }}
-                            </td>
+                    <tr>
+                        <th class="px-6 py-3 border-r dark:border-gray-600 text-center">Reg ID</th>
+                        <th class="px-6 py-3 border-r dark:border-gray-600">Reg. Date</th>
+                        <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
+                        <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
+                        <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
+                        <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
+                        <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
+                        <th class="px-6 py-3 border-r dark:border-gray-600 text-center">Workshop Status</th>
+                        <th class="px-6 py-3 text-center">Event Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($registrations as $registration)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs text-center">#{{ $registration->id }}</td>
+                        <td class="px-6 py-4 border-r dark:border-gray-700 whitespace-nowrap">{{ \Carbon\Carbon::parse($registration->registered_date)->format('M j, Y') }}</td>
+                        <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">{{ $registration->attendee->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 border-r dark:border-gray-700">{{ $registration->attendee->email ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 border-r dark:border-gray-700 italic">{{ $registration->attendee->affiliation ?? '—' }}</td>
+                        <td class="px-6 py-4 border-r dark:border-gray-700">{{ $registration->workshop->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">{{ $registration->qr_code_value ?? 'Pending' }}</td>
 
-                            <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
-                                {{ $registration->attendee->name ?? 'N/A' }}
-                            </td>
+                        {{-- MANUAL WORKSHOP STATUS --}}
+                        <td class="px-6 py-4 border-r dark:border-gray-700 text-center">
+                            <form action="{{ route('admin.workshop.update', $registration->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <select name="workshop_status" onchange="this.form.submit()"
+                                    class="text-[10px] font-bold rounded px-2 py-1 border-none text-white cursor-pointer
+                                    {{ $registration->workshop_status == 'registered' ? 'bg-blue-600' : '' }}
+                                    {{ $registration->workshop_status == 'checked_in' ? 'bg-green-600' : '' }}
+                                    {{ $registration->workshop_status == 'cancelled' ? 'bg-red-600' : '' }}">
+                                    <option value="registered" {{ $registration->workshop_status == 'registered' ? 'selected' : '' }}>REGISTERED</option>
+                                    <option value="checked_in" {{ $registration->workshop_status == 'checked_in' ? 'selected' : '' }}>CHECKED-IN</option>
+                                    <option value="cancelled" {{ $registration->workshop_status == 'cancelled' ? 'selected' : '' }}>CANCELLED</option>
+                                </select>
+                            </form>
+                        </td>
 
-                            <td class="px-6 py-4 border-r dark:border-gray-700">
-                                {{ $registration->attendee->email ?? 'N/A' }}
-                            </td>
-
-                            <td class="px-6 py-4 border-r dark:border-gray-700 italic">
-                                {{ $registration->attendee->affiliation ?? '—' }}
-                            </td>
-
-                            <td class="px-6 py-4 border-r dark:border-gray-700">
-                                {{ $registration->workshop->name ?? 'Not Available' }}
-                            </td>
-
-                            <td class="px-6 py-4 border-r dark:border-gray-700">
-                                <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->workshop_status === 'registered' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-800' }}">
-                                    {{ strtoupper($registration->workshop_status ?? 'N/A') }}
-                                </span>
-                            </td>
-
-                            <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">
-                                {{ $registration->qr_code_value ?? 'Pending' }}
-                            </td>
-
-                            <td class="px-6 py-4 text-center">
-                                <form action="{{ route('admin.registration.update', ['id' => $registration->id]) }}" method="POST" class="inline-flex items-center gap-2">
-                                    @csrf
-                                    @method('PUT')
-                                    <select name="status" onchange="this.form.submit()"
-                                        class="text-xs rounded text-white
-                                            {{ $registration->status == 'registered' ? 'border-blue-50 bg-blue-500' : '' }}
-                                            {{ $registration->status == 'checked_in' ? 'border-green-50 bg-green-500' : '' }}
-                                            {{ $registration->status == 'not_going' ? 'border-red-50 bg-red-500' : '' }}
-                                            border-gray-300 dark:text-white">
-                                        <option value="registered" {{ $registration->status == 'registered' ? 'selected' : '' }}>REGISTERED</option>
-                                        <option value="checked_in" {{ $registration->status == 'checked_in' ? 'selected' : '' }}>CHECKED-IN</option>
-                                        <option value="not_going" {{ $registration->status == 'not_going' ? 'selected' : '' }}>NOT GOING</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-                        
-                        @endforeach
-                    </tbody>
+                        {{-- MANUAL EVENT STATUS --}}
+                        <td class="px-6 py-4 text-center">
+                            <form action="{{ route('admin.registration.update', $registration->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <select name="status" onchange="this.form.submit()"
+                                    class="text-[10px] font-bold rounded px-2 py-1 border-none text-white cursor-pointer
+                                    {{ $registration->status == 'registered' ? 'bg-blue-600' : '' }}
+                                    {{ $registration->status == 'checked_in' ? 'bg-green-600' : '' }}
+                                    {{ $registration->status == 'not_going' ? 'bg-red-600' : '' }}">
+                                    <option value="registered" {{ $registration->status == 'registered' ? 'selected' : '' }}>REGISTERED</option>
+                                    <option value="checked_in" {{ $registration->status == 'checked_in' ? 'selected' : '' }}>CHECKED-IN</option>
+                                    <option value="not_going" {{ $registration->status == 'not_going' ? 'selected' : '' }}>NOT GOING</option>
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
                 </table>
             </div>
 

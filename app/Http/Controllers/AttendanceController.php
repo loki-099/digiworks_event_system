@@ -91,12 +91,14 @@ class AttendanceController extends Controller
         ]);
     }
 
-    // Manual Update from Admin Table
-    public function updateStatus(Request $request, $id) {
+    // Manual Workshop Status Update from Admin Table
+    public function updateWorkshopStatus(Request $request, $id) {
         $registration = Registration::findOrFail($id);
-        $registration->status = $request->status;
+        
+        // Update the workshop_status column
+        $registration->workshop_status = $request->workshop_status;
         $registration->save();
 
-        return back()->with('success', 'Status updated manually.');
+        return back()->with('success', 'Workshop status updated manually.');
     }
 }
