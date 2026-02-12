@@ -13,7 +13,7 @@ class AdminDashboardAttendeeController extends Controller
     //
     public function index() {
         $admin = Auth::user();
-        $registrations = Registration::with('attendee')->get(); // Use Registration::all() when you switch to Registration model
+        $registrations = Registration::with('attendee')->get();
         return view('admin.adminUsers', compact('registrations', 'admin'));
     }
 }

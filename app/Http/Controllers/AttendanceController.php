@@ -17,21 +17,6 @@ class AttendanceController extends Controller
     public function markEvent($qrcodevalue)
     {
         $registration = Registration::where('qr_code_value', $qrcodevalue)->first();
-        // if ($registration) {
-        //     $registration->status = 'checked_in';
-        //     $registration->save();
-
-        //     Attendance::create([
-        //         'registration_id' => $registration->id,
-        //         'type' => 'event',
-        //     ]);
-
-        //     return response()->json(['message' => 'Attendance marked successfully.']);
-        // }
-        // return response()->json([
-        //     'success' => false,
-        //     'message' => 'Registration not found or already checked in.'
-        // ], 404);
         if (!$registration) {
             return response()->json([
                 'success' => false,
@@ -43,6 +28,13 @@ class AttendanceController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Already checked in.'
+            ]);
+        }
+
+        if ($registration->status === 'not_going') {
+            return response()->json([
+                'success' => false,
+                'message' => 'This attendee is not going to the main event.'
             ]);
         }
 

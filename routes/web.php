@@ -38,9 +38,9 @@ Route::prefix('admin')->group(function () {
     Route::middleware('admin')->group(function () {
         // Main Dashboard
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-
         // User Management - MOVED TO AdminDashboardController@users
         Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
+        Route::get('/users/download', [AdminDashboardController::class, 'export'])->name('admin.users.export');
 
         // Attendance & Manual Updates
         Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');
