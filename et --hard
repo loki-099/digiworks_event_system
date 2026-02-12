@@ -1,0 +1,61 @@
+[33mdb9361d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to HEAD^
+[33m387c7ca[m HEAD@{1}: checkout: moving from main to main
+[33m387c7ca[m HEAD@{2}: commit: Revert "Attendance Log"
+[33mdb9361d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{3}: pull: Fast-forward
+[33m9852e39[m HEAD@{4}: commit: Attendance Log
+[33m7986190[m HEAD@{5}: commit: manual update ui change
+[33ma2651e3[m HEAD@{6}: commit: attendance for workshop
+[33mf48ae8e[m HEAD@{7}: commit: add consent
+[33md6fa6db[m HEAD@{8}: commit: fix route
+[33m16db66d[m HEAD@{9}: pull: Fast-forward
+[33mf05b4d8[m HEAD@{10}: commit: update attendance table
+[33m97b47e7[m[33m ([m[1;32mmail[m[33m)[m HEAD@{11}: merge mail: Fast-forward
+[33mff9ceef[m HEAD@{12}: checkout: moving from mail to main
+[33m97b47e7[m[33m ([m[1;32mmail[m[33m)[m HEAD@{13}: commit: merge main and mail
+[33m6503fe9[m HEAD@{14}: checkout: moving from main to mail
+[33mff9ceef[m HEAD@{15}: checkout: moving from main to main
+[33mff9ceef[m HEAD@{16}: checkout: moving from main to main
+[33mff9ceef[m HEAD@{17}: checkout: moving from mail to main
+[33m6503fe9[m HEAD@{18}: commit (merge): Merge branch 'Mail_Funtionality' of https://github.com/loki-099/digiworks_event_system into mail
+[33mff9ceef[m HEAD@{19}: checkout: moving from main to mail
+[33mff9ceef[m HEAD@{20}: commit: add attendance for main event
+[33m8767824[m HEAD@{21}: commit: qr code for registration
+[33m813d01c[m HEAD@{22}: pull: Fast-forward
+[33m100139a[m HEAD@{23}: commit: redesign registration page 1
+[33mddfa609[m HEAD@{24}: pull: Fast-forward
+[33m146fa96[m HEAD@{25}: commit: login name page
+[33m5d923f5[m HEAD@{26}: commit: removed
+[33mba0a536[m[33m ([m[1;32mqrcode[m[33m)[m HEAD@{27}: merge qrcode: Fast-forward
+[33mf0e5c8c[m HEAD@{28}: checkout: moving from qrcode to main
+[33mba0a536[m[33m ([m[1;32mqrcode[m[33m)[m HEAD@{29}: commit: add qr scanner
+[33mf0e5c8c[m HEAD@{30}: checkout: moving from main to qrcode
+[33mf0e5c8c[m HEAD@{31}: commit: attendee view via registration
+[33m09df373[m HEAD@{32}: commit (merge): Merge remote-tracking branch 'origin/working_registration'
+[33mb922d39[m HEAD@{33}: commit: add update.sh
+[33mc1e8f15[m HEAD@{34}: pull: Fast-forward
+[33ma991d24[m HEAD@{35}: merge qrcode: Fast-forward
+[33md032bbc[m HEAD@{36}: checkout: moving from qrcode to main
+[33ma991d24[m HEAD@{37}: commit: add simpleqrcode package
+[33md032bbc[m HEAD@{38}: checkout: moving from main to qrcode
+[33md032bbc[m HEAD@{39}: commit: admin layout and attendee
+[33m46303a2[m HEAD@{40}: pull: Fast-forward
+[33m8b67fe7[m HEAD@{41}: pull: Fast-forward
+[33mb98fedb[m HEAD@{42}: pull: Fast-forward
+[33m8cd1c91[m HEAD@{43}: commit (merge): Merge branch 'main' of https://github.com/loki-099/digiworks_event_system
+[33m2600452[m HEAD@{44}: commit: event and workshop crud
+[33ma5acabc[m HEAD@{45}: commit: admin dashboard event and workshop (event done)
+[33m586fdbc[m HEAD@{46}: pull: Fast-forward
+[33ma131b95[m HEAD@{47}: commit: add registration page
+[33m4e77027[m HEAD@{48}: commit: define relationship of Event and Workshops
+[33m32b4a4d[m HEAD@{49}: commit: migration for Event, Workshop, Registration
+[33m39a86f3[m HEAD@{50}: pull: Fast-forward
+[33m044a6fc[m HEAD@{51}: commit: add some functionality in admin
+[33m4048060[m HEAD@{52}: commit: ui for attendee
+[33mf3fbd5f[m HEAD@{53}: commit: add admin layout
+[33m01e7f17[m HEAD@{54}: commit: customize template\
+[33mca0bcf9[m HEAD@{55}: commit: upgraded to tailwind v4
+[33m13e66a5[m HEAD@{56}: commit: upgrade package.json
+[33md60b689[m HEAD@{57}: commit: app.css modify
+[33m97d3e72[m HEAD@{58}: commit: add flowbite
+[33m3cbb814[m HEAD@{59}: Branch: renamed refs/heads/master to refs/heads/main
+[33m3cbb814[m HEAD@{61}: commit (initial): first commit
