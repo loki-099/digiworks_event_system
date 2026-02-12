@@ -30,7 +30,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');
-    Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent'])->name('attendance.event');
+    Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent']);
 
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])
         ->name('admin.login');
