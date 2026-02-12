@@ -86,6 +86,9 @@
                     </div>
                     <input type="text" name="search" value="{{ request('search') }}" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Search for attendees...">
                 </form>
+                <a href="{{ route('AdminDashboardController.export') }}" class="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-4 py-2">
+                    Export to Excel
+                </a>
                 @if(request('search'))
                     <a href="{{ route('admin.users') }}" class="text-sm text-blue-600 hover:underline">Clear Search</a>
                 @endif

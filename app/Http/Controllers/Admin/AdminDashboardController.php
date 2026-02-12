@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Registration;
 use App\Models\Workshop;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\RegistrationsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 // class AdminDashboardController extends Controller
 // {
@@ -157,5 +159,10 @@ class AdminDashboardController extends Controller
         $registrations = $query->paginate(50);
 
         return view('admin.adminUsers', compact('registrations', 'admin'));
+    }
+
+    public function export() 
+    {
+        return Excel::download(new RegistrationsExport, 'registrations_2026.xlsx');
     }
 }
