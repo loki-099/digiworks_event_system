@@ -148,7 +148,15 @@
                         @endforelse
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4">
+                <div class="flex items-start justify-between mt-4 gap-x-8">
+
+                    <div class="flex items-center" x-show="! next">
+                        <input id="link-checkbox" type="checkbox" value=""
+                            class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="link-checkbox" class="text-gray-900 dark:text-white/80 text-sm">I am aware that my personal information will be used for certification purposes.</label>
+                    </div>
+
+
                     <button type="button"
                         class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         x-on:click="next = ! next" x-show="next">Back</button>
