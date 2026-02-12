@@ -149,18 +149,20 @@
                                 <form action="{{ route('admin.registration.update', ['id' => $registration->id]) }}" method="POST" class="inline-flex items-center gap-2">
                                     @csrf
                                     @method('PUT')
-                                    <select name="status" onchange="this.form.submit()" class="text-xs rounded border-gray-300 dark:bg-gray-700 dark:text-white">
+                                    <select name="status" onchange="this.form.submit()"
+                                        class="text-xs rounded text-white
+                                            {{ $registration->status == 'registered' ? 'border-blue-50 bg-blue-500' : '' }}
+                                            {{ $registration->status == 'checked_in' ? 'border-green-50 bg-green-500' : '' }}
+                                            {{ $registration->status == 'not_going' ? 'border-red-50 bg-red-500' : '' }}
+                                            border-gray-300 dark:text-white">
                                         <option value="registered" {{ $registration->status == 'registered' ? 'selected' : '' }}>REGISTERED</option>
                                         <option value="checked_in" {{ $registration->status == 'checked_in' ? 'selected' : '' }}>CHECKED-IN</option>
                                         <option value="not_going" {{ $registration->status == 'not_going' ? 'selected' : '' }}>NOT GOING</option>
                                     </select>
-                                    
-                                    <span class="px-2 py-1 rounded text-[10px] font-bold {{ $registration->status === 'checked_in' ? 'bg-green-500 text-white' : 'bg-yellow-100 text-yellow-800' }}">
-                                        {{ strtoupper($registration->status) }}
-                                    </span>
                                 </form>
                             </td>
                         </tr>
+                        
                         @endforeach
                     </tbody>
                 </table>
