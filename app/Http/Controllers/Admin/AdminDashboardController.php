@@ -153,8 +153,8 @@ class AdminDashboardController extends Controller
                 ->orWhere('affiliation', 'like', "%{$search}%");
             });
         }
-
-        $registrations = $query->get();
+        // set paginate to 50
+        $registrations = $query->paginate(50);
 
         return view('admin.adminUsers', compact('registrations', 'admin'));
     }

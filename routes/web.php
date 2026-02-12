@@ -25,35 +25,42 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::prefix('admin')->group(function () {
+    // 1. Redirect root to login
     Route::get('/', function () {
         return redirect('/admin/login');
     });
 
-    Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');
-    Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent']);
-
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-        ->name('admin.login');
-
+    // 2. Auth Routes
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('admin.login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-        ->name('admin.dashboard')
-        ->middleware('admin');
+    // 3. Protected Admin Routes
+    Route::middleware('admin')->group(function () {
+        // Main Dashboard
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
+        // User Management - MOVED TO AdminDashboardController@users
+        Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
+
+        // Attendance & Manual Updates
+        Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');
+        Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent']);
+        Route::put('registration/{id}/update', [AttendanceController::class, 'updateStatus'])->name('admin.registration.update');
+
+        // Event/Workshop Management
+        Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
+        Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
+        Route::put('/updateEvent/{id}', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
+        Route::put('/updateWorkshop/{id}', [AdminDashboardController::class, 'updateWorkshop'])->name('updateWorkshop');
+        Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');
+    });
+
+    // 4. Shared Auth Routes (Profile)
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
-
-    // The new users management page
-    Route::get('/users', [AdminDashboardAttendeeController::class, 'index'])->name('admin.users')->middleware('admin');
-    Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
-    Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
-    Route::put('/updateEvent/{id}', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
-    Route::put('/updateWorkshop/{id}', [AdminDashboardController::class, 'updateWorkshop'])->name('updateWorkshop');
-    Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');
 });
 
 require __DIR__ . '/auth.php';

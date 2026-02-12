@@ -73,7 +73,7 @@
             {{-- Page Header --}}
             <div class="flex items-center justify-between mb-6">
                 <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Event Attendees</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Total: {{ $registrations->count() }}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Total: {{ $registrations->total() }}</p>
             </div>
 
             {{-- Search Bar --}}
@@ -91,7 +91,7 @@
                 @endif
             </div>
 
-            {{-- Excel-Style Table: Re-arranged Flow --}}
+            {{-- Excel-Style Table --}}
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -100,7 +100,7 @@
                             <th class="px-6 py-3 border-r dark:border-gray-600">Reg. Date</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation(School/Organization)</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Workshop Status</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
@@ -110,56 +110,62 @@
                     <tbody>
                         @foreach($registrations as $registration)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            {{-- 1. Reg ID --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs text-center">#{{ $registration->id }}</td>
                             
-                            {{-- 2. Reg Date --}}
-                            <td class="px-6 py-4 border-r dark:border-gray-700">
-                                {{ \Carbon\Carbon::parse($registration->registered_date)->format('F j, Y, g:i A') }}
+                            <td class="px-6 py-4 border-r dark:border-gray-700 whitespace-nowrap">
+                                {{ \Carbon\Carbon::parse($registration->registered_date)->format('M j, Y, g:i A') }}
                             </td>
 
-                            {{-- 3. Attendee Name --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
                                 {{ $registration->attendee->name ?? 'N/A' }}
                             </td>
 
-                            {{-- 4. Email --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700">
                                 {{ $registration->attendee->email ?? 'N/A' }}
                             </td>
 
-                            {{-- 5. Affiliation --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 italic">
                                 {{ $registration->attendee->affiliation ?? '—' }}
                             </td>
 
-                            {{-- 6. Workshop --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700">
                                 {{ $registration->workshop->name ?? 'Not Available' }}
                             </td>
 
-                            {{-- 7. Workshop Status --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700">
                                 <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->workshop_status === 'registered' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-800' }}">
-                                    {{ strtoupper($registration->workshop_status) }}
+                                    {{ strtoupper($registration->workshop_status ?? 'N/A') }}
                                 </span>
                             </td>
 
-                            {{-- 8. QR Value --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">
                                 {{ $registration->qr_code_value ?? 'Pending' }}
                             </td>
 
-                            {{-- 9. Event Status --}}
                             <td class="px-6 py-4 text-center">
-                                <span class="px-2 py-1 rounded text-xs font-bold {{ $registration->status === 'registered' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-800' }}">
-                                    {{ strtoupper($registration->status) }}
-                                </span>
+                                <form action="{{ route('admin.registration.update', $registration->id) }}" method="POST" class="inline-flex items-center gap-2">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="status" onchange="this.form.submit()" class="text-xs rounded border-gray-300 dark:bg-gray-700 dark:text-white">
+                                        <option value="ongoing" {{ $registration->status == 'ongoing' ? 'selected' : '' }}>ONGOING</option>
+                                        <option value="checked_in" {{ $registration->status == 'checked_in' ? 'selected' : '' }}>CHECKED-IN</option>
+                                        <option value="cancelled" {{ $registration->status == 'cancelled' ? 'selected' : '' }}>CANCELLED</option>
+                                    </select>
+                                    
+                                    <span class="px-2 py-1 rounded text-[10px] font-bold {{ $registration->status === 'checked_in' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                        {{ strtoupper($registration->status) }}
+                                    </span>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            {{-- Pagination Links: MUST be outside the table and loop --}}
+            <div class="mt-4 px-2">
+                {{ $registrations->appends(request()->query())->links() }}
             </div>
         </div>
     </div>
