@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Attendee;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Registration;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -16,7 +17,7 @@ use chillerlan\QRCode\QROptions;
 
 class AttendeeDashboardController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $user = Auth::user();
         $event = Event::orderBy('start_date', 'desc')->first();
@@ -41,6 +42,10 @@ class AttendeeDashboardController extends Controller
             'imageBase64' => true,
         ]);
         $qrcode = (new QRCode($options))->render($qrvalue);
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return view('attendee.dashboard', compact('qrcode'));
     }
