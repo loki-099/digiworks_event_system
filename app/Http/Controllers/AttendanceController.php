@@ -21,4 +21,13 @@ class AttendanceController extends Controller
             return response()->json(['message' => 'Attendance marked successfully.']);
         }
     }
+
+    // Manual Update from Admin Table
+    public function updateStatus(Request $request, $id) {
+        $registration = Registration::findOrFail($id);
+        $registration->status = $request->status;
+        $registration->save();
+
+        return back()->with('success', 'Status updated manually.');
+    }
 }
