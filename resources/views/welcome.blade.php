@@ -19,12 +19,6 @@
             <div class="text-xl font-bold dark:text-white">
                 DigiWork Expo 2026
             </div>
-            
-            <div class="flex items-center gap-4">
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium dark:text-gray-300">Dashboard</a>
-                @endauth
-            </div>
         </div>
     </nav>
 

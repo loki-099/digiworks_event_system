@@ -178,7 +178,7 @@
                             </span>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold text-gray-950 dark:text-white">0</p>
+                            <p class="text-3xl font-bold text-gray-950 dark:text-white">{{ $checked_in }}</p>
                             <h2 class="text-sm">Total Checked-in</h2>
                         </div>
                     </div>

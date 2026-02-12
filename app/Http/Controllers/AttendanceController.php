@@ -99,4 +99,12 @@ class AttendanceController extends Controller
 
         return back()->with('success', 'Status updated manually.');
     }
+
+    public function updateWorkshopStatus(Request $request, $id) {
+        $registration = Registration::findOrFail($id);
+        $registration->workshop_status = $request->status;
+        $registration->save();
+
+        return back()->with('success', 'Workshop Status updated manually.');
+    }
 }

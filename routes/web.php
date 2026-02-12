@@ -47,7 +47,8 @@ Route::prefix('admin')->group(function () {
         Route::get('attendance/workshop/{workshop_id}', [AttendanceController::class, 'workshop'])->name('attendance.workshop');
         Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent']);
         Route::put('attendance/workshop/{workshop_id}/{qrcodevalue}', [AttendanceController::class, 'markWorkshop'])->name('attendance.workshop.id');
-        Route::put('registration/{id}/update', [AttendanceController::class, 'updateStatus'])->name('admin.registration.update');
+        Route::put('registration/{id}/update-event-status', [AttendanceController::class, 'updateStatus'])->name('admin.registration.update');
+        Route::put('registration/{id}/update-workshop-status', [AttendanceController::class, 'updateWorkshopStatus'])->name('admin.registration.updateWorkshopStatus');
 
         Route::get('/attendance/log', [AdminDashboardController::class, 'log'])->name('admin.attendanceLog');
 
