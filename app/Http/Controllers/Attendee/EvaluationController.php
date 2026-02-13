@@ -15,13 +15,10 @@ class EvaluationController extends Controller
     /**
      * Show the public evaluation form after QR scan.
      */
-    public function showForm(string $token): View
+    public function showForm(): View
     {
-        if (!Registration::where('qr_code_value', $token)->exists()) {
-            abort(404, 'Invalid QR access.');
-        }
-
-        return view('attendee.evaluate', ['token' => $token]);
+        // Simply display the form — no token needed
+        return view('attendee.evaluate');
     }
 
     /**
@@ -30,17 +27,10 @@ class EvaluationController extends Controller
     public function submit(StoreEvaluationRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $token = $data['token'];
-
-        if (!Registration::where('qr_code_value', $token)->exists()) {
-            return back()->withErrors(['token' => 'Invalid QR code.']);
-        }
-
         $email = $data['email'];
 
         // STEP 1 — find user by email
         $user = User::where('email', $email)->first();
-
         if (!$user) {
             return back()
                 ->withErrors(['email' => 'This email does not exist in our system.'])
@@ -49,7 +39,6 @@ class EvaluationController extends Controller
 
         // STEP 2 — verify this user is registered for the event
         $registration = Registration::where('attendee_id', $user->id)->first();
-
         if (!$registration) {
             return back()
                 ->withErrors(['email' => 'This email is not registered for the event.'])
@@ -72,6 +61,5 @@ class EvaluationController extends Controller
         ]);
 
         return redirect()->route('evaluate.success');
-
     }
 }

@@ -17,14 +17,15 @@ Route::get('/', function () {
 Route::get('/download-qrcode', [QrCodeController::class, 'downloadQRCode'])->name('download.qrcode');
 
 // public QR evaluation endpoints
-Route::get('/evaluate/success', function () {
-    return view('attendee.evaluation_success');
-})->name('evaluate.success');
-Route::get('/evaluate/{token}', [EvaluationController::class, 'showForm'])
+Route::get('/evaluate', [EvaluationController::class, 'showForm'])
     ->name('evaluate.form');
+
 Route::post('/evaluate/submit', [EvaluationController::class, 'submit'])
     ->name('evaluate.submit');
 
+Route::get('/evaluate/success', function () {
+    return view('attendee.evaluation_success');
+})->name('evaluate.success');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/success', [AttendeeDashboardController::class, 'index'])
