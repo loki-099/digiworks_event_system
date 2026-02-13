@@ -6,7 +6,7 @@
     <div x-data="{ next: false }">
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <div x-data="{ type: '{{ old('type') }}' }">
+            <div x-data="{ type: '{{ old('type', 'student') }}' }">
                 <div x-show="! next" x-transition>
                     <!-- Name -->
                     <div class="mb-6 w-full">
@@ -15,7 +15,7 @@
                         </label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="name" value="{{ old('name') }}" autocomplete="name">
+                            name="name" value="{{ old('name') }}" autocomplete="name" placeholder="Juan Dela Cruz">
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <!-- Email -->
@@ -25,15 +25,15 @@
                         </label>
                         <input type="text" id="email"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="email" value="{{ old('email') }}" autocomplete="username">
+                            name="email" value="{{ old('email') }}" autocomplete="username" placeholder="juan@email.com">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <!-- TYPE -->
                     <fieldset class="flex gap-x-8 mb-6">
                         <legend class="sr-only">Type</legend>
                         <div class="flex items-center">
-                            <input id="student" type="radio" name="type" value="student" x-model="type"
-                                {{ old('type') === 'student' ? 'checked' : '' }}
+                            <input id="student" type="radio" name="type" value="student" x-model='type'
+                                :checked="type === 'student' || (type === null && 'student')"
                                 class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
                             <label for="student" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                 Student
@@ -63,25 +63,31 @@
                         <!-- AFFILIATION -->
                         <div class="mb-6 mt-6 w-full">
                             <label for="affiliation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                <span x-show="type === 'student'">University Name</span>
+                                <span x-show="type === 'student'">University/School Name</span>
                                 <span x-show="type === 'professional'">Company/Organization</span>
                                 <span x-show="type === 'other'">Affiliation</span>
                             </label>
                             <input type="text" id="affiliation"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                name="affiliation" value="{{ old('affiliation') }}" autocomplete="organization">
+                                name="affiliation" value="{{ old('affiliation') }}" autocomplete="organization"
+                                x-bind:placeholder="type === 'student' ? 'University of Southern Mindanao' :
+                                    type === 'professional' ? 'Enter your company or organization' :
+                                    'Enter your affiliation'">
                             <x-input-error :messages="$errors->get('affiliation')" class="mt-2" />
                         </div>
                         <!-- POSITION -->
                         <div class="mb-6 w-full">
                             <label for="position" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                <span x-show="type === 'student'">Program</span>
+                                <span x-show="type === 'student'">Program/Course</span>
                                 <span x-show="type === 'professional'">Position</span>
                                 <span x-show="type === 'other'">Please Specify</span>
                             </label>
                             <input type="text" id="position"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                name="position" value="{{ old('position') }}" autocomplete="off">
+                                name="position" value="{{ old('position') }}" autocomplete="off"
+                                x-bind:placeholder="type === 'student' ? 'Bachelor of Science in Computer Science' :
+                                    type === 'professional' ? 'Enter your job position' :
+                                    'Please specify'">
                             <x-input-error :messages="$errors->get('position')" class="mt-2" />
                         </div>
                     </div>
@@ -148,22 +154,20 @@
                         @endforelse
                     </div>
                 </div>
-                <div class="flex items-start justify-between mt-4 gap-x-8">
-
-                    <div class="flex items-center" x-show="! next">
-                        <input id="link-checkbox" type="checkbox" value=""
-                            class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="link-checkbox" class="text-gray-900 dark:text-white/80 text-sm">I am aware that my personal information will be used for certification purposes.</label>
-                    </div>
-
-
+                <div class="flex items-center" x-show="! next">
+                    <input id="link-checkbox" type="checkbox" value=""
+                        class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="link-checkbox" class="text-gray-900 dark:text-white/80 text-sm">I am aware that my
+                        personal information will be used for certification purposes.</label>
+                </div>
+                <div class="flex items-start justify-between mt-4 gap-x-8 w-full">
                     <button type="button"
                         class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         x-on:click="next = ! next" x-show="next">Back</button>
 
                     <button type="button"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ml-auto dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        x-on:click="next = ! next" x-show="! next">Next</button>
+                        class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ml-auto dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        x-on:click="next = ! next" x-show="! next">Proceed</button>
 
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ml-auto dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
