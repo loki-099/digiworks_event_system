@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardAttendeeController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Attendee\AttendeeDashboardController;
+use App\Http\Controllers\Attendee\EvaluationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -14,6 +15,16 @@ Route::get('/', function () {
 });
 
 Route::get('/download-qrcode', [QrCodeController::class, 'downloadQRCode'])->name('download.qrcode');
+
+// public QR evaluation endpoints
+Route::get('/evaluate/success', function () {
+    return view('attendee.evaluation_success');
+})->name('evaluate.success');
+Route::get('/evaluate/{token}', [EvaluationController::class, 'showForm'])
+    ->name('evaluate.form');
+Route::post('/evaluate/submit', [EvaluationController::class, 'submit'])
+    ->name('evaluate.submit');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/success', [AttendeeDashboardController::class, 'index'])
