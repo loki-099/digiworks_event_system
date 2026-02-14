@@ -16,7 +16,8 @@ Route::get('/', function () {
 
 Route::get('/download-qrcode', [QrCodeController::class, 'downloadQRCode'])->name('download.qrcode');
 
-// public QR evaluation endpoints
+// evaluation routes
+
 Route::get('/evaluate', [EvaluationController::class, 'showForm'])
     ->name('evaluate.form');
 
@@ -26,6 +27,10 @@ Route::post('/evaluate/submit', [EvaluationController::class, 'submit'])
 Route::get('/evaluate/success', function () {
     return view('attendee.evaluation_success');
 })->name('evaluate.success');
+
+Route::get('/admin/evaluations',
+    [EvaluationController::class, 'eventEvaluations'])
+->name('admin.event.evaluations');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/success', [AttendeeDashboardController::class, 'index'])

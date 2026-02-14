@@ -7,6 +7,7 @@ use App\Http\Requests\StoreEvaluationRequest;
 use App\Models\Evaluation;
 use App\Models\Registration;
 use App\Models\User;
+use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -29,7 +30,6 @@ class EvaluationController extends Controller
         $data = $request->validated();
         $email = $data['email'];
 
-        // STEP 1 — find user by email
         $user = User::where('email', $email)->first();
         if (!$user) {
             return back()
@@ -37,7 +37,6 @@ class EvaluationController extends Controller
                 ->withInput();
         }
 
-        // STEP 2 — verify this user is registered for the event
         $registration = Registration::where('attendee_id', $user->id)->first();
         if (!$registration) {
             return back()
@@ -45,7 +44,6 @@ class EvaluationController extends Controller
                 ->withInput();
         }
 
-        // STEP 3 — check if already evaluated
         $existing = Evaluation::where('registration_id', $registration->id)->first();
         if ($existing) {
             return back()->with('message', 'You have already evaluated the event.');
@@ -61,5 +59,21 @@ class EvaluationController extends Controller
         ]);
 
         return redirect()->route('evaluate.success');
+    }
+
+    /**
+     * Show all evaluations for a specific event.
+     */
+    public function eventEvaluations()
+    {
+        // Since there is only ONE event
+        $eventId = Evaluation::value('event_id');
+
+        $evaluations = Evaluation::with('attendee')
+            ->where('event_id', $eventId)
+            ->latest()
+            ->get();
+
+        return view('admin.event-evaluation', compact('evaluations'));
     }
 }
