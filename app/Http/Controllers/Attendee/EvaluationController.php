@@ -49,7 +49,6 @@ class EvaluationController extends Controller
             return back()->with('message', 'You have already evaluated the event.');
         }
 
-        // STEP 4 — store evaluation
         Evaluation::create([
             'registration_id' => $registration->id,
             'attendee_id'     => $user->id,
