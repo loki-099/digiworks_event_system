@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Cotabato DigiWork Expo 2026</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
@@ -18,12 +18,6 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="text-xl font-bold dark:text-white">
                 DigiWork Expo 2026
-            </div>
-            
-            <div class="flex items-center gap-4">
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium dark:text-gray-300">Dashboard</a>
-                @endauth
             </div>
         </div>
     </nav>

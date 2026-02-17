@@ -178,13 +178,14 @@
                             </span>
                         </div>
                         <div>
-                            <p class="text-3xl font-bold text-gray-950 dark:text-white">0</p>
+                            <p class="text-3xl font-bold text-gray-950 dark:text-white">{{ $checked_in }}</p>
                             <h2 class="text-sm">Total Checked-in</h2>
                         </div>
                     </div>
 
                     {{-- CARD 3 --}}
-                    <a href="{{ route('attendance.event')}}" class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer">
+                    <a href="{{ route('attendance.event') }}"
+                        class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer">
                         <div>
                             <span
                                 class="w-16 h-16 p-1 bg-brand group-hover:bg-brand-strong box-border border border-transparent rounded-sm flex items-center justify-center">
@@ -214,21 +215,41 @@
                 {{-- WORKSHOPS GRID --}}
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
                     @forelse ($workshops as $workshop)
-                        <button type="button" data-modal-target="edit-workshop-modal-{{ $workshop->id }}"
-                            data-modal-toggle="edit-workshop-modal-{{ $workshop->id }}"
-                            class="block relative max-w-full h-80 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left justify-end overflow-hidden cursor-pointer">
-                            <img src="{{ asset('images/protruding-squares.svg') }}" alt="placeholder"
-                                class="min-h-full min-w-full mb-4">
-                            <div class="bg-linear-to-t from-gray-950 absolute top-0 bottom-0 right-0 left-0"></div>
-                            <div class="absolute left-3 bottom-3">
-                                <p class="text-white text-2xl font-bold">{{ $workshop->name }}</p>
-                                <p class="text-white text-sm font-medium">From:
-                                    {{ date('F d, Y g:iA', strtotime($workshop->start_date)) }}
-                                </p>
-                                <p class="text-white text-sm font-medium">To:
-                                    {{ date('F d, Y g:iA', strtotime($workshop->end_date)) }}</p>
-                            </div>
-                        </button>
+                        <div class="relative max-w-full h-80">
+                            <!-- The Card (Button) -->
+                            <button type="button" data-modal-target="edit-workshop-modal-{{ $workshop->id }}"
+                                data-modal-toggle="edit-workshop-modal-{{ $workshop->id }}"
+                                class="block w-full h-full bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left overflow-hidden cursor-pointer">
+
+                                <img src="{{ asset('images/protruding-squares.svg') }}" class="min-h-full min-w-full">
+
+                                <div class="bg-linear-to-t from-gray-950 absolute inset-0"></div>
+
+                                <div class="absolute left-3 bottom-3 z-10">
+                                    <p class="text-white text-2xl font-bold">{{ $workshop->name }}</p>
+                                    <p class="text-white text-sm font-medium">From:
+                                        {{ date('F d, Y g:iA', strtotime($workshop->start_date)) }}
+                                    </p>
+                                    <p class="text-white text-sm font-medium">To:
+                                        {{ date('F d, Y g:iA', strtotime($workshop->end_date)) }}</p>
+                                </div>
+                            </button>
+
+                            <!-- Separate Anchor Button -->
+                            <a href="{{ route('attendance.workshop', ['workshop_id' => $workshop->id]) }}"
+                                class="w-16 h-16 p-1 bg-brand rounded-sm flex items-center justify-center absolute top-2 right-2 z-50">
+                                <!-- SVG -->
+                                <svg class="w-full h-full text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
+                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
+                                </svg>
+                            </a>
+
+                        </div>
+
                     @empty
                         <button
                             class="block relative max-w-full h-80 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 text-left justify-end overflow-hidden cursor-pointer"
@@ -632,47 +653,4 @@
             {{-- QR CODE SCANNER MODAL --}}
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        const html5QrCode = new Html5Qrcode("reader");
-        let isScanning = false;
-
-        function startScanner() {
-            if (isScanning) return;
-
-            html5QrCode.start({
-                    facingMode: "environment"
-                }, {
-                    fps: 10,
-                    qrbox: 250
-                },
-                (decodedText) => {
-                    console.log("Scanned:", decodedText);
-
-                    // Optional: auto-stop after successful scan
-                    stopScanner();
-
-                    // Redirect
-                    window.location.href = route + decodedText;
-                }
-            ).then(() => {
-                isScanning = true;
-            }).catch(err => {
-                console.error("Camera start error:", err);
-            });
-        }
-
-        function stopScanner() {
-            if (!isScanning) return;
-
-            html5QrCode.stop().then(() => {
-                html5QrCode.clear();
-                isScanning = false;
-            }).catch(err => {
-                console.error("Camera stop error:", err);
-            });
-        }
-    </script>
 @endsection

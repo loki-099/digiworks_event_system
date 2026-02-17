@@ -61,8 +61,13 @@ Route::prefix('admin')->group(function () {
 
         // Attendance & Manual Updates
         Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');
+        Route::get('attendance/workshop/{workshop_id}', [AttendanceController::class, 'workshop'])->name('attendance.workshop');
         Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent']);
-        Route::put('registration/{id}/update', [AttendanceController::class, 'updateStatus'])->name('admin.registration.update');
+        Route::put('attendance/workshop/{workshop_id}/{qrcodevalue}', [AttendanceController::class, 'markWorkshop'])->name('attendance.workshop.id');
+        Route::put('registration/{id}/update-event-status', [AttendanceController::class, 'updateStatus'])->name('admin.registration.update');
+        Route::put('registration/{id}/update-workshop-status', [AttendanceController::class, 'updateWorkshopStatus'])->name('admin.registration.updateWorkshopStatus');
+
+        Route::get('/attendance/log', [AdminDashboardController::class, 'log'])->name('admin.attendanceLog');
 
         // Event/Workshop Management
         Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');

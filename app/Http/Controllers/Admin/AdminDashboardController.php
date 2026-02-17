@@ -10,19 +10,8 @@ use App\Models\Registration;
 use App\Models\Workshop;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\RegistrationsExport;
+use App\Models\Attendance;
 use Maatwebsite\Excel\Facades\Excel;
-
-// class AdminDashboardController extends Controller
-// {
-//     public function index()
-//     {   // logic so the admin gets filtered out when going to users tab in admin page
-//         $users = User::where('role','!=', 'admin') ->get();
-//         $attendeesCount = User::where('role', 'user')->count();
-//         return view('admin.dashboard', compact('attendeesCount'));
-    
-//     }
-// }
-
 
 class AdminDashboardController extends Controller
 {
@@ -32,8 +21,9 @@ class AdminDashboardController extends Controller
         $users = User::where('role','!=', 'admin') ->get();
         $event = Event::all()->first();
         $attendees = Registration::all()->count();
+        $checked_in = Registration::all()->where('status', 'checked_in')->count();
         $workshops = Workshop::all();
-        return view('admin.dashboard', compact('event', 'workshops', 'admin', 'attendees'));
+        return view('admin.dashboard', compact('event', 'workshops', 'admin', 'attendees', 'checked_in'));
     }
 
     public function addEvent(Request $request) {
@@ -164,5 +154,12 @@ class AdminDashboardController extends Controller
     public function export() 
     {
         return Excel::download(new RegistrationsExport, 'registrations_2026.xlsx');
+    }
+
+    public function log() {
+        $attendances = Attendance::all();
+        $admin = Auth::user();
+
+        return view('admin.attendance-log', compact('attendances', 'admin'));
     }
 }
