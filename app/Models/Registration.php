@@ -18,6 +18,7 @@ class Registration extends Model
         'status',
         'workshop_status',
         'registered_date',
+        'is_pitching'
     ];
 
     public const CREATED_AT = 'registered_date';
@@ -49,5 +50,10 @@ class Registration extends Model
 
     public function attendances() {
         return $this->hasMany(Attendance::class, 'registration_id');
+    }
+
+    // Get pitching
+    public function pitching() {
+        return $this->hasOne(Pitching::class, 'registration_id');
     }
 }

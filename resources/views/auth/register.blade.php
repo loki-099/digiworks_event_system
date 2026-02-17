@@ -122,6 +122,69 @@
                             </label>
                         </div>
                     </div>
+                    <h2 class="text-gray-950 dark:text-white text-xl font-bold mb-4">Pitching Event</h2>
+                    <hr class="h-px bg-neutral-quaternary border-0 mb-6">
+                    {{-- PITCHING EVENT --}}
+                    <div class="w-full p-2" x-data="{ participating: '{{ old('pitching', 'not-participating') }}' }">
+                        <div class="flex items-center gap-x-4 mb-6">
+                            <ul
+                                class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                                    <div class="flex items-center ps-3">
+                                        <input id="not-participating" type="radio" value="not-participating"
+                                            name="pitching"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                            x-model='participating'>
+                                        <label for="not-participating"
+                                            class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Not
+                                            Participating</label>
+                                    </div>
+                                </li>
+                                <li class="w-full dark:border-gray-600">
+                                    <div class="flex items-center ps-3">
+                                        <input id="participating" type="radio" value="participating" name="pitching"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                            x-model='participating'>
+                                        <label for="participating"
+                                            class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Participating</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {{-- PARTICIPATING FORM --}}
+                        <div x-show=" participating === 'participating' " x-transition>
+                            <div class="mb-6 w-full">
+                                <label for="group_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Group Name
+                                </label>
+                                <input type="text" id="group_name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    name="group_name" value="{{ old('group_name') }}" autocomplete="group_name"
+                                    placeholder="Strategic Solutions">
+                                <x-input-error :messages="$errors->get('group_name')" class="mt-2" />
+                            </div>
+                            <div class="mb-6 w-full">
+                                <label for="pitching_organization" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Organization/School
+                                </label>
+                                <input type="text" id="pitching_organization"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    name="pitching_organization" value="{{ old('pitching_organization') }}" autocomplete="pitching_organization"
+                                    placeholder="University of Southern Mindanao">
+                                <x-input-error :messages="$errors->get('pitching_organization')" class="mt-2" />
+                            </div>
+                            <div class="mb-6 w-full">
+                                <label for="team_members" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Team Members
+                                </label>
+                                <input type="text" id="team_members"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    name="team_members" value="{{ old('team_members') }}" autocomplete="team_members"
+                                    placeholder="Full names (separate by comma)">
+                                <x-input-error :messages="$errors->get('team_members')" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
                     <h2 class="text-gray-950 dark:text-white text-xl font-bold mb-4">Workshops</h2>
                     <hr class="h-px bg-neutral-quaternary border-0 mb-6">
                     <div class="flex flex-col gap-y-4">
@@ -153,6 +216,7 @@
                         @empty
                         @endforelse
                     </div>
+
                 </div>
                 <div class="flex items-center" x-show="! next">
                     <input id="link-checkbox" type="checkbox" value=""

@@ -5,29 +5,31 @@
 @section('content')
     <div>
         {{-- Success message --}}
-        @if(session('success'))
-            <div class="p-4 mb-6 text-sm text-green-700 bg-green-100 border border-green-400 rounded-lg dark:bg-green-900 dark:text-green-200 dark:border-green-700">
+        @if (session('success'))
+            <div
+                class="p-4 mb-6 text-sm text-green-700 bg-green-100 border border-green-400 rounded-lg dark:bg-green-900 dark:text-green-200 dark:border-green-700">
                 {{ session('success') }}
             </div>
         @endif
 
         {{-- General message --}}
-        @if(session('message'))
-            <div class="p-4 mb-6 text-sm text-yellow-700 bg-yellow-100 border border-yellow-400 rounded-lg dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700">
+        @if (session('message'))
+            <div
+                class="p-4 mb-6 text-sm text-yellow-700 bg-yellow-100 border border-yellow-400 rounded-lg dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700">
                 {{ session('message') }}
             </div>
         @endif
 
         <form method="POST" action="{{ route('evaluate.submit') }}">
             @csrf
-
             {{-- Email input --}}
             <div class="mb-6">
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Your email address
                 </label>
                 <input id="email" name="email" type="email" value="{{ old('email') }}"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required>
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
@@ -41,10 +43,7 @@
 
                 <div class="flex gap-x-2 mb-2">
                     <template x-for="i in 5">
-                        <span 
-                            @click="set(i)" 
-                            @mouseover="hover(i)" 
-                            @mouseleave="reset()" 
+                        <span @click="set(i)" @mouseover="hover(i)" @mouseleave="reset()"
                             class="text-5xl cursor-pointer transition-all"
                             :class="display >= i ? 'text-yellow-400' : 'text-gray-300'">
                             ★
@@ -71,10 +70,18 @@
                     return {
                         rating: {{ old('rating', 0) }},
                         temp: 0,
-                        get display() { return this.temp ? this.temp : this.rating; },
-                        set(i) { this.rating = i; },
-                        hover(i) { this.temp = i; },
-                        reset() { this.temp = 0; }
+                        get display() {
+                            return this.temp ? this.temp : this.rating;
+                        },
+                        set(i) {
+                            this.rating = i;
+                        },
+                        hover(i) {
+                            this.temp = i;
+                        },
+                        reset() {
+                            this.temp = 0;
+                        }
                     }
                 }
             </script>
@@ -93,7 +100,8 @@
 
             {{-- Buttons --}}
             <div class="flex items-center justify-end gap-x-4 mt-8">
-                <a href="/" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                <a href="/"
+                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                     Cancel
                 </a>
 
