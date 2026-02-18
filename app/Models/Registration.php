@@ -18,7 +18,8 @@ class Registration extends Model
         'status',
         'workshop_status',
         'registered_date',
-        'is_pitching'
+        'is_pitching',
+        'exhibit_product',
     ];
 
     public const CREATED_AT = 'registered_date';
