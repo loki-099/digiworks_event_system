@@ -162,4 +162,23 @@ class AdminDashboardController extends Controller
 
         return view('admin.attendance-log', compact('attendances', 'admin'));
     }
+
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+        
+        if (!$user) {
+            return redirect()->route('admin.users')->with('error', 'User not found.');
+        }
+
+        // Prevent deleting admin users
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.users')->with('error', 'Cannot delete admin users.');
+        }
+
+        // Delete the user - cascade will handle related records
+        $user->delete();
+
+        return redirect()->route('admin.users')->with('success', 'User and all related records deleted successfully.');
+    }
 }
