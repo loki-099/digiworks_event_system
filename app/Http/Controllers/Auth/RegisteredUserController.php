@@ -67,7 +67,8 @@ class RegisteredUserController extends Controller
                 'is_pitching' => $request->pitching,
                 'qr_code_value' => Str::random(10),
                 'status' => $request->boolean('is_going') ? 'registered' : 'not_going',
-                'workshop_status' => 'registered'
+                'workshop_status' => 'registered',
+                'exhibit_product' => $request->boolean('product') ? $request->exhibit_product : null
             ]);
 
             event(new Registered($user));
@@ -86,7 +87,7 @@ class RegisteredUserController extends Controller
                 'affiliation' => ['required', 'string', 'max:255'],
                 'position' => ['required', 'string', 'max:255'],
                 'pitching' => ['required', 'string', 'max:255'],
-                'group_name'=> ['required', 'string', 'max:255'],
+                'group_name' => ['required', 'string', 'max:255'],
                 'pitching_organization' => ['required', 'string', 'max:255'],
                 'team_members' => ['required', 'string'],
             ]);
@@ -112,7 +113,8 @@ class RegisteredUserController extends Controller
                 'is_pitching' => $request->pitching,
                 'qr_code_value' => Str::random(10),
                 'status' => $request->boolean('is_going') ? 'registered' : 'not_going',
-                'workshop_status' => 'registered'
+                'workshop_status' => 'registered',
+                'exhibit_product' => $request->boolean('product') ? $request->exhibit_product : null
             ]);
 
             Pitching::create([
