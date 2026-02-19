@@ -123,6 +123,8 @@
                             <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Product Exhibition</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Phone Number</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Workshop Status</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600 text-center">Event Status</th>
@@ -155,6 +157,14 @@
 
                                 <td class="px-6 py-4 border-r dark:border-gray-700">
                                     {{ $registration->workshop->name ?? 'Not Available' }}
+                                </td>
+
+                                <td class="px-6 py-4 border-r dark:border-gray-700">
+                                    {{ $registration->exhibit_product ?? 'Not Participating' }}
+                                </td>
+
+                                <td class="px-6 py-4 border-r dark:border-gray-700">
+                                    {{ $registration->phone_number ?? '—' }}
                                 </td>
 
                                 <td class="px-6 py-4 border-r dark:border-gray-700 font-mono text-xs">
