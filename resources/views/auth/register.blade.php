@@ -3,7 +3,7 @@
 @section('name', 'Register')
 
 @section('content')
-    <div x-data="{ next: false }">
+    <div x-data="{ next: false, nameField: '{{ old('name') }}', emailField: '{{ old('email') }}' }">
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div x-data="{ type: '{{ old('type', 'student') }}' }">
@@ -15,7 +15,7 @@
                         </label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="name" value="{{ old('name') }}" autocomplete="name" placeholder="Juan Dela Cruz">
+                            name="name" x-model="nameField" autocomplete="name" placeholder="Juan Dela Cruz" required>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <!-- Email -->
@@ -25,7 +25,7 @@
                         </label>
                         <input type="text" id="email"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="email" value="{{ old('email') }}" autocomplete="username" placeholder="juan@email.com">
+                            name="email" x-model="emailField" autocomplete="username" placeholder="juan@email.com" required>
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <!-- TYPE -->
@@ -240,7 +240,7 @@
                                 <input type="tel" id="phone_number"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     name="phone_number" value="{{ old('phone_number') }}" autocomplete="tel-national"
-                                    placeholder="09XXXXXXXXX">
+                                    placeholder="09XXXXXXXXX" :required="exhibit_product === '1'">
                                 <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
                             </div>
                         </div>
@@ -292,8 +292,8 @@
                         x-on:click="next = ! next" x-show="next">Back</button>
 
                     <button type="button"
-                        class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ml-auto dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        x-on:click="next = ! next" x-show="! next">Proceed</button>
+                        class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ml-auto dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                        x-on:click="next = ! next" x-show="! next" :disabled="!nameField || !emailField">Proceed</button>
 
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ml-auto dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
