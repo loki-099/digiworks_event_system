@@ -58,6 +58,7 @@ Route::prefix('admin')->group(function () {
         // User Management - MOVED TO AdminDashboardController@users
         Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
         Route::get('/users/download', [AdminDashboardController::class, 'export'])->name('admin.users.export');
+        Route::delete('/users/{id}', [AdminDashboardController::class, 'deleteUser'])->name('admin.user.delete');
 
         // Attendance & Manual Updates
         Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');

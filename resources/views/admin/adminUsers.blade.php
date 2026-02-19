@@ -70,6 +70,19 @@
     {{-- Main Content Area --}}
     <div class="p-4 sm:ml-64 min-h-screen dark:bg-gray-950">
         <div class="p-4 mt-14">
+            {{-- Success/Error Messages --}}
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 dark:bg-green-900 dark:text-green-200 rounded">
+                    <p class="font-medium">{{ session('success') }}</p>
+                </div>
+            @endif
+            
+            @if(session('error'))
+                <div class="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 dark:bg-red-900 dark:text-red-200 rounded">
+                    <p class="font-medium">{{ session('error') }}</p>
+                </div>
+            @endif
+
             {{-- Page Header --}}
             <div class="flex items-center justify-between mb-6">
                 <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Event Attendees</h1>
@@ -112,7 +125,8 @@
                             <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Workshop Status</th>
-                            <th class="px-6 py-3 text-center">Event Status</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600 text-center">Event Status</th>
+                            <th class="px-6 py-3 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -171,7 +185,7 @@
                                     </form>
                                 </td>
 
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-6 py-4 border-r dark:border-gray-700 text-center">
                                     <form action="{{ route('admin.registration.update', ['id' => $registration->id]) }}"
                                         method="POST" class="inline-flex items-center gap-2">
                                         @csrf
@@ -191,6 +205,23 @@
                                                 {{ $registration->status == 'not_going' ? 'selected' : '' }}>NOT GOING
                                             </option>
                                         </select>
+                                    </form>
+                                </td>
+
+                                <td class="px-6 py-4 text-center">
+                                    <form action="{{ route('admin.user.delete', ['id' => $registration->attendee_id]) }}"
+                                        method="POST" 
+                                        onsubmit="return confirm('Are you sure you want to delete {{ $registration->attendee->name ?? 'this user' }}? This will remove all their registrations, attendances, and evaluations.');"
+                                        class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-xs px-3 py-1.5 transition-colors">
+                                            <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                            Delete
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
