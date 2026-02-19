@@ -266,7 +266,7 @@
                             </div>
                         @empty
                         @endforelse
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="flex items-center" x-show="! next">
