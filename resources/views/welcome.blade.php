@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cotabato DigiWork Expo 2026</title>
+    <title>Cotabato 1st ICT Summits</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
@@ -17,7 +17,7 @@
     <nav class="w-full p-6 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 z-50">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="text-xl font-bold dark:text-white">
-                DigiWork Expo 2026
+                Cotabato 1st ICT Summit
             </div>
         </div>
     </nav>
@@ -41,13 +41,13 @@
         <div class="w-full md:w-1/2 flex flex-col items-center justify-center px-8 py-12 md:py-20 text-center md:text-left bg-white dark:bg-gray-950">
             <div class="max-w-xl">
                 <h1 class="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white leading-tight">
-                    Cotabato DigiWork <span class="text-blue-600">Expo 2026</span>
+                    Cotabato 1st <span class="text-blue-600">ICT Summit</span>
                 </h1>
                 
                 <p class="text-gray-600 dark:text-gray-400 mb-10 text-lg leading-relaxed">
                     A showcase of local digital innovation and technology. Join us at the 
                     <strong class="text-gray-900 dark:text-white">University of Southern Mindanao (USM)</strong> 
-                    this March 2-4, 2026 for an immersive experience in the future of work.
+                    this March 2-3, 2026 for an immersive experience in the future of work.
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center gap-4">
@@ -65,7 +65,7 @@
                 <div class="mt-12 grid grid-cols-2 gap-6 border-t border-gray-100 dark:border-gray-800 pt-8">
                     <div>
                         <span class="block text-xs uppercase tracking-widest text-gray-500 mb-1">When</span>
-                        <span class="text-sm font-semibold dark:text-gray-200">March 2 - 4, 2026</span>
+                        <span class="text-sm font-semibold dark:text-gray-200">March 2 - 3, 2026</span>
                     </div>
                     <div>
                         <span class="block text-xs uppercase tracking-widest text-gray-500 mb-1">Where</span>
@@ -87,10 +87,10 @@
                 <div>
                     <h3 class="text-xl font-semibold dark:text-blue-400 mb-4 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        What is DigiWork?
+                        What is ICT Summit?
                     </h3>
                     <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
-                        DigiWork Expo is the premier digital gathering in Cotabato, designed to bridge the gap between local talent and global technological trends. We bring together developers, students, and tech enthusiasts to explore the evolving landscape of digital careers and innovation.
+                        The Cotabato 1st ICT Summit is the premier digital gathering in Cotabato, designed to bridge the gap between local talent and global technological trends. We bring together developers, students, and tech enthusiasts to explore the evolving landscape of digital careers and innovation.
                     </p>
                 </div>
                 <div>

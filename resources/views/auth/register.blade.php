@@ -185,7 +185,7 @@
                             </div>
                         </div>
                     </div>
-                    <h2 class="text-gray-950 dark:text-white text-xl font-bold mb-4">Workshops</h2>
+                    <!-- <h2 class="text-gray-950 dark:text-white text-xl font-bold mb-4">Workshops</h2>
                     <hr class="h-px bg-neutral-quaternary border-0 mb-6">
                     <div class="flex flex-col gap-y-4">
                         @forelse ($workshops as $workshop)
@@ -215,7 +215,7 @@
                             </div>
                         @empty
                         @endforelse
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="flex items-center" x-show="! next">
