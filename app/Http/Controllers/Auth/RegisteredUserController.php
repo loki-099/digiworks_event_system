@@ -45,7 +45,8 @@ class RegisteredUserController extends Controller
                 'workshop' => 'nullable|exists:workshop,id',
                 'affiliation' => ['required', 'string', 'max:255'],
                 'position' => ['required', 'string', 'max:255'],
-                'pitching' => ['required', 'string', 'max:255']
+                'pitching' => ['required', 'string', 'max:255'],
+                'phone_number' => ['nullable', 'required_if:product,1', 'string', 'max:20']
             ]);
 
             $user = User::create([
@@ -68,7 +69,8 @@ class RegisteredUserController extends Controller
                 'qr_code_value' => Str::random(10),
                 'status' => $request->boolean('is_going') ? 'registered' : 'not_going',
                 'workshop_status' => 'registered',
-                'exhibit_product' => $request->boolean('product') ? $request->exhibit_product : null
+                'exhibit_product' => $request->boolean('product') ? $request->exhibit_product : null,
+                'phone_number' => $request->boolean('product') ? $request->phone_number : null
             ]);
 
             event(new Registered($user));
@@ -90,6 +92,7 @@ class RegisteredUserController extends Controller
                 'group_name' => ['required', 'string', 'max:255'],
                 'pitching_organization' => ['required', 'string', 'max:255'],
                 'team_members' => ['required', 'string'],
+                'phone_number' => ['nullable', 'required_if:product,1', 'string', 'max:20'],
             ]);
 
             // dd($request);
@@ -114,7 +117,8 @@ class RegisteredUserController extends Controller
                 'qr_code_value' => Str::random(10),
                 'status' => $request->boolean('is_going') ? 'registered' : 'not_going',
                 'workshop_status' => 'registered',
-                'exhibit_product' => $request->boolean('product') ? $request->exhibit_product : null
+                'exhibit_product' => $request->boolean('product') ? $request->exhibit_product : null,
+                'phone_number' => $request->boolean('product') ? $request->phone_number : null
             ]);
 
             Pitching::create([

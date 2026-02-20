@@ -20,6 +20,7 @@ class Registration extends Model
         'registered_date',
         'is_pitching',
         'exhibit_product',
+        'phone_number',
     ];
 
     public const CREATED_AT = 'registered_date';
