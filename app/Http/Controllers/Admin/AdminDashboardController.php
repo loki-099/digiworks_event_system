@@ -11,6 +11,7 @@ use App\Models\Workshop;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\RegistrationsExport;
 use App\Models\Attendance;
+use App\Models\Pitching;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminDashboardController extends Controller
@@ -134,7 +135,8 @@ class AdminDashboardController extends Controller
     public function users(Request $request)
     {
         $admin = Auth::user();
-        $query = Registration::with(['attendee', 'workshop']);
+        $query = Registration::with(['attendee', 'workshop', 'pitching']);
+        // $pitching = Pitching::with(['registration']);
 
         // Check if there is a search term
         if ($request->has('search')) {

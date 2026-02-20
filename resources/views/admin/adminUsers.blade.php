@@ -122,11 +122,14 @@
                             <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Email</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Pitching Group Name</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Pitching Organization</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Pitching Team Members</th>
+                            {{-- <th class="px-6 py-3 border-r dark:border-gray-600">Workshop</th> --}}
                             <th class="px-6 py-3 border-r dark:border-gray-600">Product Exhibition</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Phone Number</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">QR Value</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Workshop Status</th>
+                            {{-- <th class="px-6 py-3 border-r dark:border-gray-600">Workshop Status</th> --}}
                             <th class="px-6 py-3 border-r dark:border-gray-600 text-center">Event Status</th>
                             <th class="px-6 py-3 text-center">Action</th>
                         </tr>
@@ -151,13 +154,30 @@
                                     {{ $registration->attendee->email ?? 'N/A' }}
                                 </td>
 
+                                {{-- AFFILIATION --}}
                                 <td class="px-6 py-4 border-r dark:border-gray-700 italic">
                                     {{ $registration->attendee->affiliation ?? '—' }}
                                 </td>
 
-                                <td class="px-6 py-4 border-r dark:border-gray-700">
-                                    {{ $registration->workshop->name ?? 'Not Available' }}
+                                {{-- PITCHING GROUP NAME --}}
+                                <td class="px-6 py-4 border-r dark:border-gray-700 italic">
+                                    {{ $registration->pitching->group_name ?? 'Not Participating'}}
                                 </td>
+
+                                {{-- PITCHING ORGANIZATION --}}
+                                <td class="px-6 py-4 border-r dark:border-gray-700 italic">
+                                    {{ $registration->pitching->organization ?? 'Not Participating'}}
+                                </td>
+
+                                {{-- PITCHING TEAM MEMBERS --}}
+                                <td class="px-6 py-4 border-r dark:border-gray-700 italic">
+                                    {{ $registration->pitching->team_members ?? 'Not Participating'}}
+                                </td>
+
+                                {{-- WORKSHOP NAME --}}
+                                {{-- <td class="px-6 py-4 border-r dark:border-gray-700">
+                                    {{ $registration->workshop->name ?? 'Not Available' }}
+                                </td> --}}
 
                                 <td class="px-6 py-4 border-r dark:border-gray-700">
                                     {{ $registration->exhibit_product ?? 'Not Participating' }}
@@ -171,7 +191,8 @@
                                     {{ $registration->qr_code_value ?? 'Pending' }}
                                 </td>
 
-                                <td class="px-6 py-4 border-r dark:border-gray-700">
+                                {{-- WORKSHOP STATUS --}}
+                                {{-- <td class="px-6 py-4 border-r dark:border-gray-700">
                                     <form
                                         action="{{ route('admin.registration.updateWorkshopStatus', ['id' => $registration->id]) }}"
                                         method="POST" class="inline-flex items-center gap-2">
@@ -193,7 +214,7 @@
                                             </option>
                                         </select>
                                     </form>
-                                </td>
+                                </td> --}}
 
                                 <td class="px-6 py-4 border-r dark:border-gray-700 text-center">
                                     <form action="{{ route('admin.registration.update', ['id' => $registration->id]) }}"
