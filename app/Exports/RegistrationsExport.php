@@ -22,6 +22,7 @@ class RegistrationsExport implements FromCollection, WithHeadings
                     $reg->pitching->organization ?? 'N/A',
                     $reg->pitching->team_members ?? 'N/A',
                     $reg->exhibit_product ?? 'N/A',
+                    $reg->phone_number ?? 'N/A',
                     $reg->registered_date ?? 'N/A',
                 ];
             });
@@ -29,6 +30,6 @@ class RegistrationsExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["Reg ID", "Name", "Email", "Affiliation", "Pitching Group Name", "Pitching Organization", "Pitching Team Members", "Product Exhibition", "Reg Date"];
+        return ["Reg ID", "Name", "Email", "Affiliation", "Pitching Group Name", "Pitching Organization", "Pitching Team Members", "Product Exhibition", "Phone Number", "Reg Date"];
     }
 }
