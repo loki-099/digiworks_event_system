@@ -72,6 +72,8 @@ Route::prefix('admin')->group(function () {
 
         Route::get('attendance/pitcher', [AttendanceController::class, 'pitcher'])->name('attendance.pitcher');
         Route::get('attendance/attendee', [AttendanceController::class, 'attendee'])->name('attendance.attendee'); // FOR ATTENDEE FOR PITCHING
+        Route::put('attendance/pitcher/{qrcodevalue}', [AttendanceController::class, 'markPitcher']);
+        Route::put('attendance/attendee/{qrcodevalue}', [AttendanceController::class, 'markAttendee']);
 
 
         // Event/Workshop Management

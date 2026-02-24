@@ -35,34 +35,45 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Type</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Event/Workshop Name</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
-                            <th class="px-6 py-3 border-r dark:border-gray-600">Affiliation</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">For</th>
                             <th class="px-6 py-3 border-r dark:border-gray-600">Time In</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Attendee Name</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">AFfiliation</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Pitching Group Name</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Pitching Organization</th>
+                            <th class="px-6 py-3 border-r dark:border-gray-600">Product Exhibition</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($attendances as $attendance)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            {{-- For --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
-                                {{ $attendance->type  == 'event' ? 'EVENT' : 'WORKSHOP' }}
+                                {{ $attendance->for  == 'event' ? 'EVENT' : 'PITCHING' }}
                             </td>
-
+                            {{-- Time In --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
-                                {{ $attendance->type  == 'event' ? $attendance->registration->event->name : $attendance->registration->workshop->name }}
+                                {{ date('F d, Y g:iA', strtotime($attendance->created_at)) }}
                             </td>
-
+                            {{-- Attendee Name --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
                                 {{ $attendance->registration->attendee->name }}
                             </td>
-
+                            {{-- Affiliation --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
                                 {{ $attendance->registration->attendee->affiliation }}
                             </td>
-
+                            {{-- Pitching Group Name --}}
                             <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
-                                {{ date('F d, Y g:iA', strtotime($attendance->created_at)) }}
+                                {{ $attendance->registration->pitching->group_name ?? 'Not Participating' }}
+                            </td>
+                            {{-- Pitching Organization --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
+                                {{ $attendance->registration->pitching->organization ?? 'Not Participating' }}
+                            </td>
+                            {{-- Product Exhibition --}}
+                            <td class="px-6 py-4 border-r dark:border-gray-700 font-medium text-gray-900 dark:text-white">
+                                {{ $attendance->registration->exhibit_product ?? 'Not Participating' }}
                             </td>
                         </tr>
                         

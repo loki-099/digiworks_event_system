@@ -32,7 +32,7 @@
                 },
                 (decodedText) => {
                     console.log("Scanned:", decodedText);
-                    var route = "{{ route('attendance.event') }}";
+                    var route = "{{ route('attendance.pitcher') }}";
                     route = route.replace(/\/$/, '');
                     // Optional: auto-stop after successful scan
                     stopScanner();
@@ -51,7 +51,7 @@
                         .then(response => response.json())
                         .then(data => {
                             // handle success, maybe redirect or show a message
-                            window.location.href = '/admin/attendance/event'; // or wherever you want
+                            window.location.href = '/admin/attendance/pitcher'; // or wherever you want
                             alert(data.message);
                         })
                         .catch(error => {

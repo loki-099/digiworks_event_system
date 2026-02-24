@@ -11,7 +11,7 @@ class Attendance extends Model
 
     protected $fillable = [
         'registration_id',
-        'type',
+        'for',
     ];
 
     public function registration() {

@@ -50,7 +50,7 @@ class AttendanceController extends Controller
 
         Attendance::create([
             'registration_id' => $registration->id,
-            'type' => 'event',
+            'for' => 'event',
         ]);
 
         return response()->json([
@@ -91,16 +91,75 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function pitcher() {
+    public function pitcher()
+    {
         return view('admin.attendance-pitcher');
     }
 
-    public function attendee() { // Attendee for pitching
+    public function attendee()
+    { // Attendee for pitching
         return view('admin.attendance-attendee');
     }
 
+    public function markPitcher($qrcodevalue)
+    {
+        $registration = Registration::where('qr_code_value', $qrcodevalue)->first();
+        if (!$registration) {
+            return response()->json([
+                'success' => false,
+                'message' => 'QR Code not found.'
+            ], 404);
+        }
+
+        if ($registration->status === 'not_going') {
+            return response()->json([
+                'success' => false,
+                'message' => 'This attendee is not going to the main event.'
+            ]);
+        }
+
+        Attendance::create([
+            'registration_id' => $registration->id,
+            'for' => 'pitching',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Attendance marked successfully.'
+        ]);
+    }
+
+    public function markAttendee($qrcodevalue)
+    {
+        $registration = Registration::where('qr_code_value', $qrcodevalue)->first();
+        if (!$registration) {
+            return response()->json([
+                'success' => false,
+                'message' => 'QR Code not found.'
+            ], 404);
+        }
+
+        if ($registration->status === 'not_going') {
+            return response()->json([
+                'success' => false,
+                'message' => 'This attendee is not going to the main event.'
+            ]);
+        }
+
+        Attendance::create([
+            'registration_id' => $registration->id,
+            'for' => 'event',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Attendance marked successfully.'
+        ]);
+    }
+
     // Manual Update from Admin Table
-    public function updateStatus(Request $request, $id) {
+    public function updateStatus(Request $request, $id)
+    {
         $registration = Registration::findOrFail($id);
         $registration->status = $request->status;
         $registration->save();
@@ -108,7 +167,8 @@ class AttendanceController extends Controller
         return back()->with('success', 'Status updated manually.');
     }
 
-    public function updateWorkshopStatus(Request $request, $id) {
+    public function updateWorkshopStatus(Request $request, $id)
+    {
         $registration = Registration::findOrFail($id);
         $registration->workshop_status = $request->status;
         $registration->save();
