@@ -91,6 +91,14 @@ class AttendanceController extends Controller
         ]);
     }
 
+    public function pitcher() {
+        return view('admin.attendance-pitcher');
+    }
+
+    public function attendee() { // Attendee for pitching
+        return view('admin.attendance-attendee');
+    }
+
     // Manual Update from Admin Table
     public function updateStatus(Request $request, $id) {
         $registration = Registration::findOrFail($id);

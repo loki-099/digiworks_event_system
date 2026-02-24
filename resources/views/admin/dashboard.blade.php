@@ -205,15 +205,65 @@
                         </div>
                     </a>
                 </div>
-                <div class="mt-10 flex items-center justify-between">
+
+                {{-- MARCH 2 ATTENDANCE QR --}}
+                <div class="mt-10 ">
+                    <h1 class="text-3xl text-gray-950 dark:text-white font-bold">March 2 Attendance</h1>
+                </div>
+                <hr class="h-px my-2 bg-neutral-quaternary border-0">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 my-4">
+                    <a href="{{ route('attendance.attendee') }}"
+                        class="group w-full flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-violet-700 box-border border border-transparent hover:bg-violet-800 cursor-pointer">
+                        <div>
+                            <span
+                                class="w-16 h-16 p-1 bg-violet-700 group-hover:bg-violet-800 box-border border border-transparent rounded-sm flex items-center justify-center">
+                                <svg class="w-full h-full text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
+                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-white">For Attendee</p>
+                            <h2 class="text-sm">Check-in</h2>
+                        </div>
+                    </a>
+                    <a href="{{ route('attendance.pitcher') }}"
+                        class="group w-full flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-violet-700 box-border border border-transparent hover:bg-violet-800 cursor-pointer">
+                        <div>
+                            <span
+                                class="w-16 h-16 p-1 bg-violet-700 group-hover:bg-violet-800 box-border border border-transparent rounded-sm flex items-center justify-center">
+                                <svg class="w-full h-full text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
+                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-white">For Pitcher</p>
+                            <h2 class="text-sm">Check-in</h2>
+                        </div>
+                    </a>
+                </div>
+
+                {{-- FOR WORKSHOPS --}}
+                {{-- <div class="mt-10 flex items-center justify-between">
                     <h1 class="text-3xl text-gray-950 dark:text-white font-bold">Workshops</h1>
                     <button type="button" data-modal-target="add-workshop-modal" data-modal-toggle="add-workshop-modal"
                         class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Add
                         Workshop</button>
                 </div>
-                <hr class="h-px my-2 bg-neutral-quaternary border-0">
+                <hr class="h-px my-2 bg-neutral-quaternary border-0"> --}}
                 {{-- WORKSHOPS GRID --}}
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
+                {{-- <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
                     @forelse ($workshops as $workshop)
                         <div class="relative max-w-full h-80">
                             <!-- The Card (Button) -->
@@ -260,7 +310,7 @@
                             </div>
                         </button>
                     @endforelse
-                </div>
+                </div> --}}
             @else
                 <div class="flex items-center justify-center h-32 rounded-sm bg-gray-50 dark:bg-gray-800">
                     <p class="text-2xl text-gray-400 dark:text-gray-500">

@@ -70,6 +70,10 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/attendance/log', [AdminDashboardController::class, 'log'])->name('admin.attendanceLog');
 
+        Route::get('attendance/pitcher', [AttendanceController::class, 'pitcher'])->name('attendance.pitcher');
+        Route::get('attendance/attendee', [AttendanceController::class, 'attendee'])->name('attendance.attendee'); // FOR ATTENDEE FOR PITCHING
+
+
         // Event/Workshop Management
         Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
         Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
