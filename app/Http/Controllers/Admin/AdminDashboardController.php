@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AttendaceExport;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Models\Registration;
 use App\Models\Workshop;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\RegistrationsExport;
+use App\Exports\AttendanceExport;
 use App\Models\Attendance;
 use App\Models\Pitching;
 use Maatwebsite\Excel\Facades\Excel;
@@ -195,6 +197,10 @@ class AdminDashboardController extends Controller
     public function export() 
     {
         return Excel::download(new RegistrationsExport, 'registrations_2026.xlsx');
+    }
+
+    public function attendanceExport() {
+        return Excel::download(new AttendanceExport, 'attendances_2026.xlsx');
     }
 
     public function log() {

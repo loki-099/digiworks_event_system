@@ -7,6 +7,10 @@
         <div class="p-4 mt-14">
             <div class="flex items-center justify-between mb-6">
                 <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Attendance Log History</h1>
+                <a href="{{ route('attendance.export') }}"
+                    class="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-4 py-2">
+                    Export to Excel
+                </a>
             </div>
 
             {{-- <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
