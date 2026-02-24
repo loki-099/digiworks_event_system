@@ -75,6 +75,7 @@ Route::prefix('admin')->group(function () {
         Route::put('attendance/pitcher/{qrcodevalue}', [AttendanceController::class, 'markPitcher']);
         Route::put('attendance/attendee/{qrcodevalue}', [AttendanceController::class, 'markAttendee']);
         Route::get('attendance/export-attendance', [AdminDashboardController::class, 'attendanceExport'])->name('attendance.export');
+        Route::delete('/attendance/log/{id}', [AttendanceController::class, 'deleteLog'])->name('attendance.log.delete');
 
 
         // Event/Workshop Management

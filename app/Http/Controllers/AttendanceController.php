@@ -101,6 +101,19 @@ class AttendanceController extends Controller
         return view('admin.attendance-attendee');
     }
 
+    public function deleteLog($id) {
+        $log = Attendance::find($id);
+        
+        if (!$log) {
+            return redirect()->route('admin.attendanceLog')->with('error', 'Log not found.');
+        }
+
+        // Delete the user - cascade will handle related records
+        $log->delete();
+
+        return redirect()->route('admin.attendanceLog')->with('success', 'Log deleted successfully.');
+    }
+
     public function markPitcher($qrcodevalue)
     {
         $registration = Registration::where('qr_code_value', $qrcodevalue)->first();
