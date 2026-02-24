@@ -147,8 +147,47 @@ class AdminDashboardController extends Controller
                 ->orWhere('affiliation', 'like', "%{$search}%");
             });
         }
+
+        // SORTING
+        $sort = $request->get('sort', 'id');
+        $direction = $request->get('direction', 'desc');
+
+        $allowedSorts = [
+            'id',
+            'registered_date',
+            'name',
+            'email',
+            'affiliation',
+            'group_name',
+            'organization'
+        ];
+
+        if (in_array($sort, $allowedSorts)) {
+
+            // Sort registration columns
+            if (in_array($sort, ['id', 'registered_date'])) {
+                $query->orderBy($sort, $direction);
+            }
+
+            // Sort attendee columns
+            elseif (in_array($sort, ['name', 'email', 'affiliation'])) {
+
+                $query->join('users', 'users.id', '=', 'registration.attendee_id')
+                    ->orderBy("users.$sort", $direction)
+                    ->select('registration.*');
+            }
+
+            // Sort pitching columns
+            elseif (in_array($sort, ['group_name', 'organization'])) {
+
+                $query->leftJoin('pitching', 'pitching.registration_id', '=', 'registration.id')
+                    ->orderBy("pitching.$sort", $direction)
+                    ->select('registration.*');
+            }
+        }
         // set paginate to 50
         $registrations = $query->paginate(50);
+        
 
         return view('admin.adminUsers', compact('registrations', 'admin'));
     }

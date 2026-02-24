@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'User Management')
+@section('title', 'Attendee')
 
 @section('content')
     {{-- <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -100,9 +100,35 @@
                         </svg>
                     </div>
                     <input type="text" name="search" value="{{ request('search') }}"
-                        class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        class="block p-2 ps-10 text-sm text-white border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                         placeholder="Search for attendees...">
                 </form>
+                
+                <form method="GET" action="{{ route('admin.users') }}" 
+                    class="flex flex-wrap items-center gap-2">
+                    <select name="sort"
+                        onchange="this.form.submit()"
+                        class="p-2 pr-8 text-sm border rounded-lg dark:bg-gray-700 dark:text-white">
+
+                        <option value="id" {{ request('sort', 'id') == 'id' ? 'selected' : '' }}>Reg ID</option>
+                        <option value="registered_date" {{ request('sort') == 'registered_date' ? 'selected' : '' }}>Reg Date</option>
+                        <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Attendee Name</option>
+                        <option value="email" {{ request('sort') == 'email' ? 'selected' : '' }}>Email</option>
+                        <option value="affiliation" {{ request('sort') == 'affiliation' ? 'selected' : '' }}>Affiliation</option>
+                        <option value="group_name" {{ request('sort') == 'group_name' ? 'selected' : '' }}>Pitching Group</option>
+                        <option value="organization" {{ request('sort') == 'organization' ? 'selected' : '' }}>Pitching Organization</option>
+                    </select>
+
+                    <select name="direction"
+                        onchange="this.form.submit()"
+                        class="p-2 pr-8 text-sm border rounded-lg dark:bg-gray-700 dark:text-white">
+
+                        <option value="desc" {{ request('direction', 'desc') == 'desc' ? 'selected' : '' }}>Descending</option>
+                        <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                    </select>
+
+                </form>
+                
                 <a href="{{ route('admin.users.export') }}"
                     class="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-4 py-2">
                     Export to Excel
