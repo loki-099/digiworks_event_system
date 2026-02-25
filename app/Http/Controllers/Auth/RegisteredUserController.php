@@ -46,6 +46,7 @@ class RegisteredUserController extends Controller
                 'affiliation' => ['required', 'string', 'max:255'],
                 'position' => ['required', 'string', 'max:255'],
                 'pitching' => ['required', 'string', 'max:255'],
+                'exhibit_product' => ['nullable', 'required_if:product,1', 'string', 'max:255'],
                 'phone_number' => ['nullable', 'required_if:product,1', 'string', 'max:20']
             ]);
 
@@ -92,6 +93,7 @@ class RegisteredUserController extends Controller
                 'group_name' => ['required', 'string', 'max:255'],
                 'pitching_organization' => ['required', 'string', 'max:255'],
                 'team_members' => ['required', 'string'],
+                'exhibit_product' => ['nullable', 'required_if:product,1', 'string', 'max:255'],
                 'phone_number' => ['nullable', 'required_if:product,1', 'string', 'max:20'],
             ]);
 
