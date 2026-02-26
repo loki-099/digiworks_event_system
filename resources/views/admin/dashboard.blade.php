@@ -133,10 +133,10 @@
                 </div>
                 <form method="POST" action="{{ route('admin.queue.registration.mails') }}" onsubmit="return confirm('Queue unsent QR emails now? This may send a large batch.');">
                     @csrf
-                    <button type="submit"
+                    <!-- <button type="submit"
                         class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                         Queue Unsent QR Mails
-                    </button>
+                    </button> -->
                 </form>
             </div>
 
