@@ -14,6 +14,8 @@ class Registration extends Model
         'event_id',
         'workshop_id',
         'qr_code_value',
+        'qr_mail_queued_at',
+        'qr_mail_sent_at',
         'is_going',
         'status',
         'workshop_status',

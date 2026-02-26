@@ -6,7 +6,7 @@
 </head>
 <body style="font-family: Arial, sans-serif; text-align: center;">
 
-    <h2>You're Registered for DigiWorks Event 🎉</h2>
+    <h2>You're registered for Cotabato ICT Summit 🎉</h2>
 
     <p>Hello {{ $user->name }},</p>
 
@@ -25,12 +25,16 @@
     <p>
         Keep this email safe. Do not share your QR code.
     </p>
+    <p>
+       <strong>Event Details:</strong><br>
+        University Of Southern Mindanao - Kabacan Campus<br>
+        March 2-3, 2026<br>
+    </p>
 
     <br>
 
     <small>
-        DigiWorks Event Team  
-        {{ config('app.name') }}
+        Cotabato ICT Summit Event Team  
     </small>
 
 </body>

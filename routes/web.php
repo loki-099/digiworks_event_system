@@ -81,6 +81,7 @@ Route::prefix('admin')->group(function () {
         // Event/Workshop Management
         Route::post('/addEvent', [AdminDashboardController::class, 'addEvent'])->name('addEvent');
         Route::post('/addWorkshop/{eventId}', [AdminDashboardController::class, 'addWorkshop'])->name('addWorkshop');
+        Route::post('/queue-registration-mails', [AdminDashboardController::class, 'queueRegistrationQrMails'])->name('admin.queue.registration.mails');
         Route::put('/updateEvent/{id}', [AdminDashboardController::class, 'updateEvent'])->name('updateEvent');
         Route::put('/updateWorkshop/{id}', [AdminDashboardController::class, 'updateWorkshop'])->name('updateWorkshop');
         Route::delete('/deleteWorkshop/{id}', [AdminDashboardController::class, 'deleteWorkshop'])->name('deleteWorkshop');

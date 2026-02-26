@@ -119,6 +119,27 @@
     {{-- MAIN CONTENT --}}
     <div class="p-4 sm:ml-64 min-h-screen dark:bg-gray-950">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+            @if (session('success'))
+                <div class="mb-4 p-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="mb-4 p-4 bg-gray-50 rounded-sm dark:bg-gray-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Queued manually from admin only.</p>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Pending QR mails: <span class="font-semibold">{{ $pendingQrMails }}</span></p>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Sent QR mails: <span class="font-semibold">{{ $sentQrMails }}</span></p>
+                </div>
+                <form method="POST" action="{{ route('admin.queue.registration.mails') }}" onsubmit="return confirm('Queue unsent QR emails now? This may send a large batch.');">
+                    @csrf
+                    <button type="submit"
+                        class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                        Queue Unsent QR Mails
+                    </button>
+                </form>
+            </div>
+
             @isset($event)
                 <div
                     class="flex items-center justify-center h-64 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800 overflow-hidden relative">

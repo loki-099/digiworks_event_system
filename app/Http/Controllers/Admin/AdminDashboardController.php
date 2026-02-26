@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\AttendaceExport;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendRegistrationQrMail;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -25,8 +26,42 @@ class AdminDashboardController extends Controller
         $event = Event::all()->first();
         $attendees = Registration::all()->count();
         $checked_in = Registration::all()->where('status', 'checked_in')->count();
+        $pendingQrMails = Registration::whereNull('qr_mail_sent_at')->count();
+        $sentQrMails = Registration::whereNotNull('qr_mail_sent_at')->count();
         $workshops = Workshop::all();
-        return view('admin.dashboard', compact('event', 'workshops', 'admin', 'attendees', 'checked_in'));
+        return view('admin.dashboard', compact('event', 'workshops', 'admin', 'attendees', 'checked_in', 'pendingQrMails', 'sentQrMails'));
+    }
+
+    public function queueRegistrationQrMails()
+    {
+        $queued = 0;
+
+        Registration::with(['attendee'])
+            ->whereNull('qr_mail_sent_at')
+            ->whereNull('qr_mail_queued_at')
+            ->whereNotNull('attendee_id')
+            ->chunkById(200, function ($registrations) use (&$queued) {
+                foreach ($registrations as $registration) {
+                    if (! optional($registration->attendee)->email) {
+                        continue;
+                    }
+
+                    if ($registration->qr_mail_queued_at) {
+                        continue;
+                    }
+
+                    $registration->forceFill([
+                        'qr_mail_queued_at' => now(),
+                    ])->save();
+
+                    SendRegistrationQrMail::dispatch($registration->id);
+                    $queued++;
+                }
+            });
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', $queued . ' QR email(s) queued for sending.');
     }
 
     public function addEvent(Request $request) {

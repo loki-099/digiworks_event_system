@@ -6,13 +6,12 @@ use App\Models\Event;
 use App\Models\Registration;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 
-class RegistrationQRCodeMail extends Mailable implements ShouldQueue
+class RegistrationQRCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -37,7 +36,7 @@ class RegistrationQRCodeMail extends Mailable implements ShouldQueue
 
         $qrBinary = (new QRCode($options))->render($this->registration->qr_code_value);
 
-        return $this->subject('Your DigiWorks Event QR Code')
+        return $this->subject('Your Check-In QR Code - Cotabato ICT Summit')
             ->view('emails.registration_qr')
             ->with([
                 'user' => $this->user,

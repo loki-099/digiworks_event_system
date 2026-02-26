@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\RegistrationQRCodeMail;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 
@@ -32,9 +30,6 @@ class AttendeeDashboardController extends Controller
             'status' => 'registered',
         ]
         );
-        Mail::to($user->email)->send(new RegistrationQRCodeMail($user, $event, $registration));
-
-        
         $qrvalue = Registration::where('attendee_id', $user->id)->value('qr_code_value');
         $options = new QROptions([
             'outputType' => QRCode::OUTPUT_IMAGE_PNG,
