@@ -14,10 +14,11 @@ class RegistrationsExport implements FromCollection, WithHeadings
             ->get()
             ->map(function($reg) {
                 return [
-                    $reg->id,
+                    $reg->attendee->type ?? 'N/A',
                     $reg->attendee->name ?? 'N/A',
                     $reg->attendee->email ?? 'N/A',
                     $reg->attendee->affiliation ?? 'N/A',
+                    $reg->attendee->position ?? 'N/A',
                     $reg->pitching->group_name ?? 'N/A',
                     $reg->pitching->organization ?? 'N/A',
                     $reg->pitching->team_members ?? 'N/A',
@@ -30,6 +31,6 @@ class RegistrationsExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["Reg ID", "Name", "Email", "Affiliation", "Pitching Group Name", "Pitching Organization", "Pitching Team Members", "Product Exhibition", "Phone Number", "Reg Date"];
+        return ["Type", "Name", "Email", "Affiliation", "Position", "Pitching Group Name", "Pitching Organization", "Pitching Team Members", "Product Exhibition", "Phone Number", "Reg Date"];
     }
 }
