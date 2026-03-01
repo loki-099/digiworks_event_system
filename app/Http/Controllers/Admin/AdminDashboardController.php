@@ -240,7 +240,7 @@ class AdminDashboardController extends Controller
 
     public function log() {
         $query = Attendance::with('registration.pitching');
-        $attendances = $query->paginate(50);
+        $attendances = $query->orderBy('created_at', 'desc')->paginate(50);
         $admin = Auth::user();
 
         return view('admin.attendance-log', compact('attendances', 'admin'));
