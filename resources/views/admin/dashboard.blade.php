@@ -120,23 +120,28 @@
     <div class="p-4 sm:ml-64 min-h-screen dark:bg-gray-950">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
             @if (session('success'))
-                <div class="mb-4 p-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <div class="mb-4 p-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                    role="alert">
                     {{ session('success') }}
                 </div>
             @endif
 
-            <div class="mb-4 p-4 bg-gray-50 rounded-sm dark:bg-gray-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div
+                class="mb-4 p-4 bg-gray-50 rounded-sm dark:bg-gray-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                     <p class="text-sm text-gray-700 dark:text-gray-300">Queued manually from admin only.</p>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">Pending QR mails: <span class="font-semibold">{{ $pendingQrMails }}</span></p>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">Sent QR mails: <span class="font-semibold">{{ $sentQrMails }}</span></p>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Pending QR mails: <span
+                            class="font-semibold">{{ $pendingQrMails }}</span></p>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Sent QR mails: <span
+                            class="font-semibold">{{ $sentQrMails }}</span></p>
                 </div>
-                <form method="POST" action="{{ route('admin.queue.registration.mails') }}" onsubmit="return confirm('Queue unsent QR emails now? This may send a large batch.');">
+                <form method="POST" action="{{ route('admin.queue.registration.mails') }}"
+                    onsubmit="return confirm('Queue unsent QR emails now? This may send a large batch.');">
                     @csrf
                     <!-- <button type="submit"
-                        class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                        Queue Unsent QR Mails
-                    </button> -->
+                                class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                                Queue Unsent QR Mails
+                            </button> -->
                 </form>
             </div>
 
@@ -205,26 +210,53 @@
                     </div>
 
                     {{-- CARD 3 --}}
-                    <a href="{{ route('attendance.event') }}"
-                        class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer">
-                        <div>
-                            <span
-                                class="w-16 h-16 p-1 bg-brand group-hover:bg-brand-strong box-border border border-transparent rounded-sm flex items-center justify-center">
-                                <svg class="w-full h-full text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
-                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
-                                </svg>
+                    @if (now()->gte(\Carbon\Carbon::parse('2026-03-03')))
+                        <a href="{{ route('attendance.event') }}"
+                            class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer">
+                            <div>
+                                <span
+                                    class="w-16 h-16 p-1 bg-brand group-hover:bg-brand-strong box-border border border-transparent rounded-sm flex items-center justify-center">
+                                    <svg class="w-full h-full text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
+                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
+                                    </svg>
 
-                            </span>
+                                </span>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold text-white">Scan QR Code</p>
+                                <h2 class="text-sm">Check-in</h2>
+                            </div>
+                        </a>
+                    @else
+                        <div
+                            class="group flex items-center justify-start gap-x-4 text-white px-4 h-24 rounded-sm bg-brand box-border border border-transparent hover:bg-brand-strong cursor-pointer relative">
+                            <div class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center backdrop-blur-sm bg-black/50"> 
+                                <h1>Available on March 3</h1>
+                            </div>
+                            <div>
+                                <span
+                                    class="w-16 h-16 p-1 bg-brand group-hover:bg-brand-strong box-border border border-transparent rounded-sm flex items-center justify-center">
+                                    <svg class="w-full h-full text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
+                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
+                                    </svg>
+
+                                </span>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold text-white">Scan QR Code</p>
+                                <h2 class="text-sm">Check-in</h2>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-3xl font-bold text-white">Scan QR Code</p>
-                            <h2 class="text-sm">Check-in</h2>
-                        </div>
-                    </a>
+                    @endif
+
                 </div>
 
                 {{-- MARCH 2 ATTENDANCE QR --}}
@@ -724,4 +756,6 @@
             {{-- QR CODE SCANNER MODAL --}}
         </div>
     </div>
+
+    <script></script>
 @endsection
