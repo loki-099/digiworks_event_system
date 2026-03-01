@@ -15,13 +15,10 @@ class AdminAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! auth()->check()) {
-            return redirect('/admin/login');
-        }
-
-        if (! in_array(auth()->user()->role, ['admin', 'facilitator'])) {
-            abort(403);
-        }
+        // dump($request->user()->role);
+        if ($request->user()->role === 'facilitator') {
+            return redirect()->route('admin.dashboard');
+        };  
 
         return $next($request);
     }

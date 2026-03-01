@@ -54,26 +54,26 @@ Route::prefix('admin')->group(function () {
     // 3. Protected Admin Routes
     Route::middleware('admin')->group(function () {
         // Main Dashboard
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->withoutMiddleware('admin');
         // User Management - MOVED TO AdminDashboardController@users
         Route::get('/users', [AdminDashboardController::class, 'users'])->name('admin.users');
         Route::get('/users/download', [AdminDashboardController::class, 'export'])->name('admin.users.export');
         Route::delete('/users/{id}', [AdminDashboardController::class, 'deleteUser'])->name('admin.user.delete');
 
         // Attendance & Manual Updates
-        Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event');
-        Route::get('attendance/workshop/{workshop_id}', [AttendanceController::class, 'workshop'])->name('attendance.workshop');
-        Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent']);
-        Route::put('attendance/workshop/{workshop_id}/{qrcodevalue}', [AttendanceController::class, 'markWorkshop'])->name('attendance.workshop.id');
-        Route::put('registration/{id}/update-event-status', [AttendanceController::class, 'updateStatus'])->name('admin.registration.update');
-        Route::put('registration/{id}/update-workshop-status', [AttendanceController::class, 'updateWorkshopStatus'])->name('admin.registration.updateWorkshopStatus');
+        Route::get('attendance/event', [AttendanceController::class, 'event'])->name('attendance.event')->withoutMiddleware('admin');
+        Route::get('attendance/workshop/{workshop_id}', [AttendanceController::class, 'workshop'])->name('attendance.workshop')->withoutMiddleware('admin');
+        Route::put('attendance/event/{qrcodevalue}', [AttendanceController::class, 'markEvent'])->withoutMiddleware('admin');
+        Route::put('attendance/workshop/{workshop_id}/{qrcodevalue}', [AttendanceController::class, 'markWorkshop'])->name('attendance.workshop.id')->withoutMiddleware('admin');
+        Route::put('registration/{id}/update-event-status', [AttendanceController::class, 'updateStatus'])->name('admin.registration.update')->withoutMiddleware('admin');
+        Route::put('registration/{id}/update-workshop-status', [AttendanceController::class, 'updateWorkshopStatus'])->name('admin.registration.updateWorkshopStatus')->withoutMiddleware('admin');
 
         Route::get('/attendance/log', [AdminDashboardController::class, 'log'])->name('admin.attendanceLog');
 
-        Route::get('attendance/pitcher', [AttendanceController::class, 'pitcher'])->name('attendance.pitcher');
-        Route::get('attendance/attendee', [AttendanceController::class, 'attendee'])->name('attendance.attendee'); // FOR ATTENDEE FOR PITCHING
-        Route::put('attendance/pitcher/{qrcodevalue}', [AttendanceController::class, 'markPitcher']);
-        Route::put('attendance/attendee/{qrcodevalue}', [AttendanceController::class, 'markAttendee']);
+        Route::get('attendance/pitcher', [AttendanceController::class, 'pitcher'])->name('attendance.pitcher')->withoutMiddleware('admin');
+        Route::get('attendance/attendee', [AttendanceController::class, 'attendee'])->name('attendance.attendee')->withoutMiddleware('admin'); // FOR ATTENDEE FOR PITCHING
+        Route::put('attendance/pitcher/{qrcodevalue}', [AttendanceController::class, 'markPitcher'])->withoutMiddleware('admin');
+        Route::put('attendance/attendee/{qrcodevalue}', [AttendanceController::class, 'markAttendee'])->withoutMiddleware('admin');
         Route::get('attendance/export-attendance', [AdminDashboardController::class, 'attendanceExport'])->name('attendance.export');
         Route::delete('/attendance/log/{id}', [AttendanceController::class, 'deleteLog'])->name('attendance.log.delete');
 
