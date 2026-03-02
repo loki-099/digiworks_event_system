@@ -23,7 +23,7 @@ class AttendanceController extends Controller
 
     public function markEvent($qrcodevalue)
     {
-        $registration = Registration::where('qr_code_value', $qrcodevalue)->first();
+        $registration = Registration::with('attendee')->where('qr_code_value', $qrcodevalue)->first();
         if (!$registration) {
             return response()->json([
                 'success' => false,
@@ -55,7 +55,7 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Attendance marked successfully.'
+            'message' => 'Attendance marked successfully for ' . $registration->attendee->name . '.'
         ]);
     }
 
@@ -102,7 +102,7 @@ class AttendanceController extends Controller
     }
 
     public function deleteLog($id) {
-        $log = Attendance::find($id);
+        $log = Attendance::with('registration')->find($id);
         
         if (!$log) {
             return redirect()->route('admin.attendanceLog')->with('error', 'Log not found.');
@@ -110,6 +110,8 @@ class AttendanceController extends Controller
 
         // Delete the user - cascade will handle related records
         $log->delete();
+        $log->registration->status = 'registered';
+        $log->registration->save();
 
         return redirect()->route('admin.attendanceLog')->with('success', 'Log deleted successfully.');
     }
@@ -176,6 +178,13 @@ class AttendanceController extends Controller
         $registration = Registration::findOrFail($id);
         $registration->status = $request->status;
         $registration->save();
+
+        if ($request->status == 'checked_in') {
+            Attendance::create([
+                'registration_id' => $registration->id,
+                'for' => 'event',
+            ]);
+        }
 
         return back()->with('success', 'Status updated manually.');
     }

@@ -260,7 +260,7 @@
                 </div>
 
                 {{-- MARCH 2 ATTENDANCE QR --}}
-                <div class="mt-10 ">
+                {{-- <div class="mt-10 ">
                     <h1 class="text-3xl text-gray-950 dark:text-white font-bold">March 2 Attendance</h1>
                 </div>
                 <hr class="h-px my-2 bg-neutral-quaternary border-0">
@@ -305,7 +305,7 @@
                             <h2 class="text-sm">Check-in</h2>
                         </div>
                     </a>
-                </div>
+                </div> --}}
 
                 {{-- FOR WORKSHOPS --}}
                 {{-- <div class="mt-10 flex items-center justify-between">
