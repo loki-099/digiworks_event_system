@@ -1,6 +1,6 @@
 @extends('layouts.attendance')
 
-@section('name', 'Pitching Attendance')
+@section('name', 'Pitching Pitcher Attendance')
 
 @section('content')
     <div>
