@@ -238,13 +238,40 @@ class AdminDashboardController extends Controller
         return Excel::download(new AttendanceExport, 'attendances_2026.xlsx');
     }
 
-    public function log() {
-        $query = Attendance::with('registration.pitching');
-        $attendances = $query->orderBy('created_at', 'desc')->paginate(50);
-        $admin = Auth::user();
+    public function log(Request $request) 
+{
+    $admin = Auth::user();
+    
+    // 1. Initialize query with relationships
+    $query = Attendance::with(['registration.attendee', 'registration.pitching']);
 
-        return view('admin.attendance-log', compact('attendances', 'admin'));
+    // 2. Enhanced Search Logic (Including Product Exhibition)
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+
+        $query->where(function($q) use ($search) {
+            // Search Name and Affiliation in Attendee
+            $q->whereHas('registration.attendee', function($sq) use ($search) {
+                $sq->where('name', 'like', "%{$search}%")
+                   ->orWhere('affiliation', 'like', "%{$search}%");
+            })
+            // Search Group Name in Pitching
+            ->orWhereHas('registration.pitching', function($sq) use ($search) {
+                $sq->where('group_name', 'like', "%{$search}%");
+            })
+            // Search Product Exhibition in Registration
+            ->orWhereHas('registration', function($sq) use ($search) {
+                $sq->where('exhibit_product', 'like', "%{$search}%");
+            });
+        });
     }
+
+    // 3. Finalize data for the view
+    $attendances = $query->orderBy('created_at', 'desc')->paginate(50);
+    $totalCount = $attendances->total(); // Gets the total count based on current search/filter
+
+    return view('admin.attendance-log', compact('attendances', 'admin', 'totalCount'));
+}
 
     public function deleteUser($id)
     {
