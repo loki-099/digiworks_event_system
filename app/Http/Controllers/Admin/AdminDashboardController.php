@@ -229,6 +229,24 @@ class AdminDashboardController extends Controller
         return view('admin.adminUsers', compact('registrations', 'admin'));
     }
 
+    public function updateAttendee(Request $request, $id) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'affiliation' => 'required|string|max:255',
+        ]);
+        $attendee = Registration::find($id)->attendee;
+        if ($attendee) {
+            $attendee->update([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'affiliation' => $request->input('affiliation'),
+            ]);
+        }
+
+        return redirect()->route('admin.users')->with('success', 'Attendee updated successfully.');
+    }
+
     public function export() 
     {
         return Excel::download(new RegistrationsExport, 'registrations_2026.xlsx');
