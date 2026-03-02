@@ -243,7 +243,7 @@
                                     </form>
                                 </td> --}}
 
-                                <td class="px-6 py-4 border-r dark:border-gray-700 text-center">
+                                <td class="px-6 py-4 border-r dark:border-gray-700 text-center" onclick="event.stopPropagation()">
                                     <form action="{{ route('admin.registration.update', ['id' => $registration->id]) }}"
                                         method="POST" class="inline-flex items-center gap-2">
                                         @csrf
@@ -266,7 +266,7 @@
                                     </form>
                                 </td>
 
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-6 py-4 text-center" onclick="event.stopPropagation()">
                                     <form action="{{ route('admin.user.delete', ['id' => $registration->attendee_id]) }}"
                                         method="POST" 
                                         onsubmit="return confirm('Are you sure you want to delete {{ $registration->attendee->name ?? 'this user' }}? This will remove all their registrations, attendances, and evaluations.');"
