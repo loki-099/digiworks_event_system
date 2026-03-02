@@ -24,6 +24,7 @@ class AttendanceExport implements FromCollection, WithHeadings
                     $att->registration->attendee->affiliation ?? 'N/A',
                     $att->registration->pitching->group_name ?? 'N/A',
                     $att->registration->pitching->organization ?? 'N/A',
+                    $att->registration->pitching->team_members ?? 'N/A',
                     $att->registration->exhibit_product ?? 'N/A',
                 ];
             });
@@ -31,6 +32,6 @@ class AttendanceExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["For", "Time In", "Attendee Name", "Affiliation", "Pitching Group Name", "Pitching Organization", "Product Exhibition"];
+        return ["For", "Time In", "Attendee Name", "Affiliation", "Pitching Group Name", "Pitching Organization", "Team Members", "Product Exhibition"];
     }
 }
